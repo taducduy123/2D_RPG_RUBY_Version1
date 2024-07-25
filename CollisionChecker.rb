@@ -31,35 +31,54 @@ module CCHECK
 
     if entity.upDirection == true
       entityTopRow = (entityTopWorldY - entity.speed) / CP::TILE_SIZE
-      tileNum1 = map.tileManager[entityTopRow][entityLeftCol]
-      tileNum2 = map.tileManager[entityTopRow][entityRightCol]
-      if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
-          entity.collisionOn = true
+      if(entityTopRow < 0)                                        # Check map boundary
+        entity.collisionOn = true
+      else
+        tileNum1 = map.tileManager[entityTopRow][entityLeftCol]
+        tileNum2 = map.tileManager[entityTopRow][entityRightCol]
+        if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
+            entity.collisionOn = true
+        end
       end
+      
 
     elsif entity.downDirection == true
       entityBottomRow = (entityBottomWorldY + entity.speed) / CP::TILE_SIZE
-      tileNum1 = map.tileManager[entityBottomRow][entityLeftCol]
-      tileNum2 = map.tileManager[entityBottomRow][entityRightCol]
-      if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
-          entity.collisionOn = true
+      if(entityBottomRow > CP::MAX_WORLD_ROWS - 1)                # Check map boundary
+        entity.collisionOn = true
+      else
+        tileNum1 = map.tileManager[entityBottomRow][entityLeftCol]
+        tileNum2 = map.tileManager[entityBottomRow][entityRightCol]
+        if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
+            entity.collisionOn = true
+        end
       end
+      
 
     elsif entity.leftDirection == true
       entityLeftCol = (entityLeftWorldX - entity.speed) / CP::TILE_SIZE
-      tileNum1 = map.tileManager[entityTopRow][entityLeftCol]
-      tileNum2 = map.tileManager[entityBottomRow][entityLeftCol]
-      if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
-          entity.collisionOn = true
+      if(entityLeftCol < 0)                                       # Check map boundary
+        entity.collisionOn = true
+      else 
+        tileNum1 = map.tileManager[entityTopRow][entityLeftCol]
+        tileNum2 = map.tileManager[entityBottomRow][entityLeftCol]
+        if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
+            entity.collisionOn = true
+        end
       end
+      
 
     elsif entity.rightDirection == true
       entityRightCol = (entityRightWorldX + entity.speed) / CP::TILE_SIZE
-      tileNum1 = map.tileManager[entityTopRow][entityRightCol]
-      tileNum2 = map.tileManager[entityBottomRow][entityRightCol]
-      if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
-          entity.collisionOn = true
-      end
+      if(entityRightCol > CP::MAX_WORLD_COLS - 1)                 # Check map boundary
+        entity.collisionOn = true
+      else
+        tileNum1 = map.tileManager[entityTopRow][entityRightCol]
+        tileNum2 = map.tileManager[entityBottomRow][entityRightCol]
+        if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
+            entity.collisionOn = true
+        end
+      end     
     end
   end
 

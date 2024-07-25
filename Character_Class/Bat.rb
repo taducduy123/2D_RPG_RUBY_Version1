@@ -6,12 +6,12 @@ require_relative 'Monster'
 include CCHECK
 
 class Bat < Monster
-  def initialize(wordlX, worldY, width, height)
+  def initialize(wordlX, worldY, width, height, player)
     super(wordlX, worldY, width, height)
     @image = Sprite.new(
       'Image/Bat.png',
-      x: 0,
-      y: 0,
+      x: @worldX - player.worldX + player.x,
+      y: @worldY - player.worldY + player.y,
       width: width, height: height,
       clip_width: width_Of('Image/Bat.png') / 2,
       animations: {fly: 1..2},

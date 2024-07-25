@@ -53,10 +53,10 @@ class Monster < Sprite
     #Where to draw monster in the screen (window)
     screenX = @worldX - player.worldX + player.x
     screenY = @worldY - player.worldY + player.y
-    if (@worldX + CP::TILE_SIZE >= player.worldX - player.x &&
-        @worldX - CP::TILE_SIZE <= player.worldX + player.x &&
-        @worldY + CP::TILE_SIZE >= player.worldY - player.y &&
-        @worldY - CP::TILE_SIZE <= player.worldY + player.y)
+    if (@worldX + 3*CP::TILE_SIZE >= player.worldX - player.x &&
+        @worldX - 3*CP::TILE_SIZE <= player.worldX + player.x &&
+        @worldY + 3*CP::TILE_SIZE >= player.worldY - player.y &&
+        @worldY - 3*CP::TILE_SIZE <= player.worldY + player.y)
 
         @image.x = screenX
         @image.y = screenY
@@ -66,13 +66,10 @@ class Monster < Sprite
 
   #
   def checkCollision(player, map)
-    # Checking collision before moving
-    @collisionOn = false
     #1. Check if monster collides wall
     CCHECK.checkTile(self, map)
     #2. Check if monster collides Player
     CCHECK.checkEntity_Collide_SingleTarget(self, player)
-
   end
 
 #------------------------------ Random Move ---------------------------------------------------
@@ -97,14 +94,10 @@ class Monster < Sprite
         @rightDirection = true
       end
 
-      self.checkCollision(player, map)
-      # # Checking collision before moving
-      # @collisionOn = false
-      # #1. Check if monster collides wall
-      # CCHECK.checkTile(self, map)
-      # #2. Check if monster collides Player
-      # CCHECK.checkEntity_Collide_SingleTarget(self, player)
 
+      # Checking collision before moving
+      @collisionOn = false
+      self.checkCollision(player, map)
 
       if(@collisionOn == false)
         if(self.upDirection == true)
@@ -138,48 +131,7 @@ class Monster < Sprite
         @worldX += @speed
       end
     else
-      @moveCounter = @moveCounter + 1
-      #puts "#{@moveCounter} \n"
-      if(@moveCounter == 20)
-        @upDirection = false
-        @downDirection = false
-        @leftDirection = false
-        @rightDirection = false
-  
-        ranNum = rand(1..100)
-        if(1 <= ranNum && ranNum <= 25)
-          @upDirection = true
-        elsif(25 < ranNum && ranNum <= 50)
-          @downDirection = true
-        elsif(50 < ranNum && ranNum <= 75)
-          @leftDirection = true
-        else
-          @rightDirection = true
-        end
-  
-        self.checkCollision(player, map)
-        # # Checking collision before moving
-        # @collisionOn = false
-        # #1. Check if monster collides wall
-        # CCHECK.checkTile(self, map)
-        # #2. Check if monster collides Player
-        # CCHECK.checkEntity_Collide_SingleTarget(self, player)
-
-  
-  
-        if(@collisionOn == false)
-          if(self.upDirection == true)
-            @worldY -= @speed
-          elsif(self.downDirection == true)
-            @worldY += @speed
-          elsif(self.leftDirection == true)
-            @worldX -= @speed
-          elsif(self.rightDirection == true)
-            @worldX += @speed
-          end
-        end
-      @moveCounter = 0 #reset moveCounter
-      end
+      self.randMove(player,map)
     end
 
     #Reset node

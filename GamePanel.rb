@@ -6,7 +6,6 @@ require_relative 'GameMap'
 require_relative 'CommonParameter'
 require_relative 'Character_Class/Monster'
 require_relative 'Character_Class/Bat'
-require_relative 'Character_Class/Bat1'
 require_relative 'FindingPath/Node'
 require_relative 'FindingPath/PathFinder'
 include CCHECK
@@ -21,9 +20,9 @@ pFinder = PathFinder.new()
 #1. Create objects in the game
 map = GameMap.new()
 player = Player.new(7*CP::TILE_SIZE, 7*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
-monsters = [Bat.new(480, 480, CP::TILE_SIZE, CP::TILE_SIZE),
-            Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE),
-            Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE)]
+monsters = [Bat.new(480, 480, CP::TILE_SIZE, CP::TILE_SIZE, player),
+            Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
+            Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)]
 text = Text.new(
   '',
   x: 0, y: 0,
