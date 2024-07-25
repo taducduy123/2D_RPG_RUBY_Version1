@@ -62,10 +62,10 @@ class GameMap
                 worldY = i * CP::TILE_SIZE
                 screenX = worldX - player.worldX + player.x
                 screenY = worldY - player.worldY + player.y
-                if ( worldX + CP::TILE_SIZE >= player.worldX - player.x &&
-                     worldX - CP::TILE_SIZE <= player.worldX + player.x &&
-                     worldY + CP::TILE_SIZE >= player.worldY - player.y &&
-                     worldY - CP::TILE_SIZE <= player.worldY + player.y)
+                if ( worldX + 3*CP::TILE_SIZE >= player.worldX - player.x &&
+                     worldX - 3*CP::TILE_SIZE <= player.worldX + player.x &&
+                     worldY + 3*CP::TILE_SIZE >= player.worldY - player.y &&
+                     worldY - 3*CP::TILE_SIZE <= player.worldY + player.y)
 
                      @tileSet[i][j].image.x = screenX
                      @tileSet[i][j].image.y = screenY
