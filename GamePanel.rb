@@ -19,10 +19,12 @@ pFinder = PathFinder.new()
 
 #1. Create objects in the game
 map = GameMap.new()
-player = Player.new(7*CP::TILE_SIZE, 7*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
-monsters = [Bat.new(480, 480, CP::TILE_SIZE, CP::TILE_SIZE, player),
+player = Player.new(1*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
+monsters = [Bat.new(15*CP::TILE_SIZE, 15*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player),
             Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
-            Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)]
+            Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
+           ]
+          
 text = Text.new(
   '',
   x: 0, y: 0,
@@ -67,7 +69,7 @@ end
 #Setting Window
 set width: CP::SCREEN_WIDTH
 set height: CP::SCREEN_HEIGHT
-set title: "20x20 Grid RPG"
+set title: "Grid RPG"
 set resizable: true
 set background: 'black'
 #set fullscreen: true

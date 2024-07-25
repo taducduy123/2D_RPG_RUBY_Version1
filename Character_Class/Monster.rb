@@ -9,12 +9,11 @@ include CCHECK
 
 
 
-
 class Monster < Sprite
   attr_reader :x, :y, :speed, :worldX, :worldY, :moveCounter
   attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, :solidArea, :collisionOn, :image, :onPath
 
-  def initialize(wordlX, worldY, width, height)
+  def initialize(worldX, worldY, width, height)
 
     @image = nil
 
@@ -26,7 +25,7 @@ class Monster < Sprite
     @rightDirection = false
 
     #World Coordinate
-    @worldX = wordlX
+    @worldX = worldX
     @worldY = worldY
 
     #Area for collision
@@ -53,14 +52,14 @@ class Monster < Sprite
     #Where to draw monster in the screen (window)
     screenX = @worldX - player.worldX + player.x
     screenY = @worldY - player.worldY + player.y
-    if (@worldX + 3*CP::TILE_SIZE >= player.worldX - player.x &&
-        @worldX - 3*CP::TILE_SIZE <= player.worldX + player.x &&
-        @worldY + 3*CP::TILE_SIZE >= player.worldY - player.y &&
-        @worldY - 3*CP::TILE_SIZE <= player.worldY + player.y)
+    # if (@worldX + 3*CP::TILE_SIZE >= player.worldX - player.x &&
+    #     @worldX - 3*CP::TILE_SIZE <= player.worldX + player.x &&
+    #     @worldY + 3*CP::TILE_SIZE >= player.worldY - player.y &&
+    #     @worldY - 3*CP::TILE_SIZE <= player.worldY + player.y)
 
         @image.x = screenX
         @image.y = screenY
-    end
+    # end
   end
 
 
@@ -114,6 +113,7 @@ class Monster < Sprite
     end
   end
 
+
   #
   def moveForwardTo(goalRow, goalCol, player, map, pFinder)
 
@@ -154,8 +154,8 @@ class Monster < Sprite
       nextY = pFinder.pathList[0].col * CP::TILE_SIZE
 
       # Entity's solid area
-      enLeftX  = @wordlX + @solidArea.x
-      enRightX = @wordlX + @solidArea.x + @solidArea.width
+      enLeftX  = @worldX + @solidArea.x
+      enRightX = @worldX + @solidArea.x + @solidArea.width
       enTopY   = @worldY + @solidArea.y 
       enBottomY   = @worldY + @solidArea.y + @solidArea.height
 
@@ -213,7 +213,6 @@ class Monster < Sprite
         @onPath = false
       end
     end
-
   end
 
 end

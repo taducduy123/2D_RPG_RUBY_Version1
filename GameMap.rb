@@ -7,7 +7,7 @@ require_relative 'CollisionChecker'
 require_relative 'CommonParameter'
 require_relative 'ImageHandler'
 require_relative 'Get_map'
-
+include CCHECK
 
 #Wall: 0
 #Grass: 1
@@ -28,6 +28,7 @@ class GameMap
             @tile[i].image.remove
         end
 
+        # Read map from file
         @tileManager = get_Map('Map/map1.txt')
 
         # Create a 2D array with all elements initialized to nil
@@ -37,6 +38,7 @@ class GameMap
         self.showMap()
     end
 
+    #
     def showMap()
         for i in 0..CP::MAX_WORLD_ROWS-1
             for j in 0..CP::MAX_WORLD_COLS-1
@@ -55,6 +57,7 @@ class GameMap
     end
 
 
+    #
     def camera(player)
         for i in 0..CP::MAX_WORLD_ROWS-1
             for j in 0..CP::MAX_WORLD_COLS-1
@@ -62,19 +65,37 @@ class GameMap
                 worldY = i * CP::TILE_SIZE
                 screenX = worldX - player.worldX + player.x
                 screenY = worldY - player.worldY + player.y
-                if ( worldX + 3*CP::TILE_SIZE >= player.worldX - player.x &&
-                     worldX - 3*CP::TILE_SIZE <= player.worldX + player.x &&
-                     worldY + 3*CP::TILE_SIZE >= player.worldY - player.y &&
-                     worldY - 3*CP::TILE_SIZE <= player.worldY + player.y)
+
+                # #World Coordinate of Camera
+                # cameraX = player.worldX - player.x
+                # cameraY = player.worldY - player.y
+                
+                
+                # if(CCHECK.intersect(worldX, worldY, CP::TILE_SIZE, CP::TILE_SIZE, 
+                #                     cameraX, cameraY, CP::SCREEN_WIDTH, CP::SCREEN_HEIGHT) == true)  #Notice we want the dimension of camera is exactly same as our window
+                #      @tileSet[i][j].image.x = screenX
+                #      @tileSet[i][j].image.y = screenY
+
+                #       puts "#{i}  #{j}  \n"
+                # end
+
+                # if ( worldX + 1*CP::TILE_SIZE > player.worldX - player.x &&
+                #      worldX - 1*CP::TILE_SIZE < player.worldX + player.x &&
+                #      worldY + 1*CP::TILE_SIZE > player.worldY - player.y &&
+                #      worldY - 1*CP::TILE_SIZE < player.worldY + player.y)
 
                      @tileSet[i][j].image.x = screenX
-                     @tileSet[i][j].image.y = screenY
-                end
+                     @tileSet[i][j].image.y = screenY 
+
+                #      puts "#{i}  #{j}  \n"
+                # end
+                #puts "#{i}  #{j}  \n"
             end
         end
     end
 
-
+    
+    #
     def update(player)
         self.camera(player)
     end

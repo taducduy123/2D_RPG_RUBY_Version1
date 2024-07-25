@@ -28,6 +28,7 @@ class Bat < Monster
   def updateMonster(player, map, pFinder)
       self.DrawMonster(player)
       self.randMove(player, map)
+      #self.moveForwardTo((player.worldX) / CP::TILE_SIZE, (player.worldY) / CP::TILE_SIZE, player, map, pFinder)
   end
 
 end

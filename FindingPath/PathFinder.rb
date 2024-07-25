@@ -145,7 +145,7 @@ class PathFinder
             # After the loop, openList[bestNodeIndex] is the next step (= currentNode)
             @currentNode = @openList[bestNodeIndex]
 
-            if (@currentNode == @goalNode)
+            if (@currentNode.row == @goalNode.row && @currentNode.col == @goalNode.col)
                 @goalReached = true
                 self.trackThePath()
             end
@@ -176,3 +176,23 @@ class PathFinder
         end
     end
 end
+
+
+
+
+# map = GameMap.new
+# pFinder = PathFinder.new
+# pFinder.setNodes(2, 2, 13, 13, map)
+# pFinder.search
+
+
+
+#     for i in 0..(pFinder.pathList.length - 1)
+#         puts "#{pFinder.pathList[i].row}      #{pFinder.pathList[i].col} \n"
+#     end
+
+
+
+
+
+
