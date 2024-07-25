@@ -17,15 +17,15 @@ module WorldHandler
     #Ex: If a monster has WORLD COORDINATE (1000, 1000), then the following function will help yoi
     #to determine where you should play the monster in our SCREEN (notice that the monster can or cannot in the Screen)
     def DrawObject(object, player)
-        screenX = @worldX - player.worldX + player.x
-        screenY = @worldY - player.worldY + player.y
+        screenX = object.worldX - player.worldX + player.x
+        screenY = object.worldY - player.worldY + player.y
         if (object.worldX + CP::TILE_SIZE + 20 >= player.worldX - player.x &&
             object.worldX - CP::TILE_SIZE - 20 <= player.worldX + player.x &&
             object.worldY + CP::TILE_SIZE + 20 >= player.worldY - player.y &&
             object.worldY - CP::TILE_SIZE - 20 <= player.worldY + player.y)
-            
+
             object.image.x = screenX
             object.image.y = screenY
-        end    
+        end
     end
 end

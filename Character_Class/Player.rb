@@ -74,7 +74,7 @@ class Player < Sprite
 
 
 #-------------------------------- Update -----------------------------------------
-  def updatePlayer(monsters, map)
+  def updatePlayer(monsters, map, npc)
 
 
     @collisionOn = false
@@ -87,8 +87,14 @@ class Player < Sprite
     if(monsterIndex != -1)
       puts 'You are hitting a monster'
     end
+    CCHECK.checkEntity_Collide_SingleTarget(self, npc)
+    self.move()
+
+  end
 
 
+#-------------------------------- Move -----------------------------------------
+  def move()
     if(@collisionOn == false)
       if(self.upDirection == true)
         @worldY -= @speed
@@ -100,13 +106,6 @@ class Player < Sprite
         @worldX += @speed
       end
     end
-
-  end
-
-
-#-------------------------------- Move -----------------------------------------
-  def move()
-
   end
 
 #-------------------------------- Setter Methods -----------------------------------------
