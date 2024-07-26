@@ -41,6 +41,8 @@ class Monster < Sprite
 
     #This is used to find the shortest path
     @onPath = false
+
+    @counter = 0
   end
 
 
@@ -117,25 +119,39 @@ class Monster < Sprite
   #
   def moveForwardTo(goalRow, goalCol, player, map, pFinder)
 
+    @upDirection = false
+    @downDirection = false
+    @leftDirection = false
+    @rightDirection = false
+
+    #Search path
     self.searchPath(goalRow, goalCol, player, map, pFinder)
+    #puts "#{@onPath} \n"
+    #if path found
+    if(@onPath == true)  
+      
+      @counter = @counter + 1
+      puts "MOVINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG + #{@counter}\n"
+      # Checking collision before moving
+      @collisionOn = false
+      self.checkCollision(player, map)
 
-    if(@onPath == true)
-
-      if(self.upDirection == true)
-        @worldY -= @speed
-      elsif(self.downDirection == true)
-        @worldY += @speed
-      elsif(self.leftDirection == true)
-        @worldX -= @speed
-      elsif(self.rightDirection == true)
-        @worldX += @speed
+      if(@collisionOn == false)
+        if(self.upDirection == true)
+          @worldY -= @speed
+          #puts "being movingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg + #{@counter}\n"
+        elsif(self.downDirection == true)
+          @worldY += @speed
+          #puts "being movingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg + #{@counter}\n"
+        elsif(self.leftDirection == true)
+          @worldX -= @speed
+          #puts "being movingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg + #{@counter}\n"
+        elsif(self.rightDirection == true)
+          @worldX += @speed
+          #puts "being movingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg + #{@counter}\n"
+        end
       end
-    else
-      self.randMove(player,map)
     end
-
-    #Reset node
-    pFinder.resetNodes
   end
 
 
@@ -150,14 +166,14 @@ class Monster < Sprite
       @onPath = true
 
       # next worldX and worldY
-      nextX = pFinder.pathList[0].row * CP::TILE_SIZE
-      nextY = pFinder.pathList[0].col * CP::TILE_SIZE
+      nextX = pFinder.pathList[0].col * CP::TILE_SIZE
+      nextY = pFinder.pathList[0].row * CP::TILE_SIZE
 
       # Entity's solid area
-      enLeftX  = @worldX + @solidArea.x
-      enRightX = @worldX + @solidArea.x + @solidArea.width
-      enTopY   = @worldY + @solidArea.y 
-      enBottomY   = @worldY + @solidArea.y + @solidArea.height
+      enLeftX   = @worldX + @solidArea.x
+      enRightX  = @worldX + @solidArea.x + @solidArea.width
+      enTopY    = @worldY + @solidArea.y 
+      enBottomY = @worldY + @solidArea.y + @solidArea.height
 
 
       if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + CP::TILE_SIZE)
@@ -207,11 +223,12 @@ class Monster < Sprite
       end
 
       # Stop when catching the goal
-      nextRow = pFinder.pathList[0].row
-      nextCol = pFinder.pathList[0].col
-      if(nextRow == goalRow && nextCol == goalCol)
-        @onPath = false
-      end
+      # nextRow = pFinder.pathList[0].row
+      # nextCol = pFinder.pathList[0].col
+
+      # if(nextRow == goalRow && nextCol == goalCol)
+      #   @onPath = false
+      # end
     end
   end
 

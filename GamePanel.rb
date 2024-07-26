@@ -20,9 +20,9 @@ pFinder = PathFinder.new()
 #1. Create objects in the game
 map = GameMap.new()
 player = Player.new(1*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
-monsters = [Bat.new(15*CP::TILE_SIZE, 15*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player),
-            Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
-            Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
+monsters = [Bat.new(38*CP::TILE_SIZE, 38*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
+            # Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
+            # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
            ]
           
 text = Text.new(
@@ -31,7 +31,18 @@ text = Text.new(
   #font: 'vera.ttf',
   style: 'bold',
   size: 20,
-  color: 'black',
+  color: 'white',
+  #rotate: 90,
+  #z: 10
+)
+
+text1 = Text.new(
+  '',
+  x: 450, y: 0,
+  #font: 'vera.ttf',
+  style: 'bold',
+  size: 20,
+  color: 'white',
   #rotate: 90,
   #z: 10
 )
@@ -55,10 +66,12 @@ update do
     end
 
     #3. Update Texts
-    text.text = "Coordinate: #{player.worldX}  #{player.worldY} \n"
-
+    text.text = "Coordinate: #{player.worldX}  #{player.worldY} "
+    text1.text = "Coordinate Monster: #{monsters[0].worldX}    #{monsters[0].worldY}"
+    
+    
     #4. Update Map
-    map.update(player)
+    map.updateMap(player, pFinder)
 
 
 end

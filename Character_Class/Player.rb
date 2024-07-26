@@ -2,6 +2,7 @@ require 'ruby2d'
 require_relative '../ImageHandler' # to read dimemsion of image ==> must install (gem install rmagick)
 require_relative '../CollisionChecker'
 require_relative '../CommonParameter'
+require_relative 'HealthBar'
 include CCHECK
 
 
@@ -49,6 +50,17 @@ class Player < Sprite
 
       }
     )
+
+
+      #health bar
+    @healthbar = HealthBar.new(
+      200,
+      200,
+      CP::SCREEN_WIDTH / 2 - (CP::TILE_SIZE/2) - (width*2/3),
+      CP::SCREEN_HEIGHT / 2 - (CP::TILE_SIZE/2) - 10,
+      100
+    )
+
     @speed = 3
     #@direction = nil
     @upDirection = false
