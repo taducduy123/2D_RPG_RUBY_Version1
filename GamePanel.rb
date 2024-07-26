@@ -61,6 +61,7 @@ get_key_input(player)
 pFinder = PathFinder.new()
 #------------------------------------ 2.3. Audio/Sound ------------------------------
 music = Music.new('Sound/Dungeon.wav')
+music.loop = true
 music.play
 
 
@@ -91,7 +92,7 @@ end
 #Setting Window
 set width: CP::SCREEN_WIDTH
 set height: CP::SCREEN_HEIGHT
-set title: "Grid RPG"
+set title: "Simulating Hero's Adventure (RPG GAME) with Ruby "
 set resizable: true
 set background: 'black'
 #set fullscreen: true
