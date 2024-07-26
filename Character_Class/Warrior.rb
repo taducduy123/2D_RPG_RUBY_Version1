@@ -13,7 +13,7 @@ class Warrior < NPC
       'Image/First_Npc.png',
       x: worldX,
       y: worldY,
-      width: width / 1.5, height: height + 20,
+      width: width , height: height + 20,
       clip_width: width_Of('Image/First_Npc.png') / 5,
       clip_height: height_Of('Image/First_Npc.png') ,
       animations: {idle: 1..4},

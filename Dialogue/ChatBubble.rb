@@ -2,7 +2,7 @@ require 'ruby2d'
 
 class ChatBubble
   attr_accessor :image, :text
-  attr_reader :isSolid,  :visible
+  attr_reader   :visible
 
   def initialize(x, y, width, height, message = "")
     @image = Image.new(
@@ -12,8 +12,7 @@ class ChatBubble
       width: width,
       height: height
     )
-
-    @isSolid = false
+    @visible = true
 
     @text = Text.new(
       message,
@@ -32,7 +31,6 @@ class ChatBubble
     @image.add
     @text.add
     @visible = true
-    print @text.width
   end
 
   def hide

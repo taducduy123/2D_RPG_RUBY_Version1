@@ -9,6 +9,9 @@ require_relative 'Character_Class/Bat'
 require_relative 'FindingPath/Node'
 require_relative 'FindingPath/PathFinder'
 require_relative 'Character_Class/Warrior'
+require_relative 'Item_Class/Chest'
+require_relative 'Item_Class/Loot_item'
+
 include CCHECK
 
 
@@ -37,6 +40,8 @@ text = Text.new(
 
 firstNPC = Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3,
 CP::TILE_SIZE, CP::TILE_SIZE)
+insideChest = Meat.new
+newchest = Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 5,insideChest)
 
 #1.1
 pFinder = PathFinder.new()
@@ -49,7 +54,7 @@ get_key_input(player)
 #------------------------------------------------------- Game Loop ------------------------------------------
 update do
     #1. Update Player
-    player.updatePlayer(monsters, map, firstNPC)
+    player.updatePlayer(monsters, map, firstNPC, newchest)
 
     #2. Update all Monsters
     for i in 0..(monsters.length - 1)
@@ -62,6 +67,7 @@ update do
     # Update npc
     firstNPC.updateNPC(player, map)
 
+    newchest.updateChest(player)
     #4. Update Map
     map.update(player)
 

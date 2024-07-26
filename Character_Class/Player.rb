@@ -2,6 +2,8 @@ require 'ruby2d'
 require_relative '../ImageHandler' # to read dimemsion of image ==> must install (gem install rmagick)
 require_relative '../CollisionChecker'
 require_relative '../CommonParameter'
+require_relative '../Item_Class/Player_Inventory'
+
 include CCHECK
 
 
@@ -9,7 +11,7 @@ include CCHECK
 
 class Player < Sprite
   attr_reader :x, :y, :speed, :worldX, :worldY
-  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, :solidArea, :collisionOn
+  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, :solidArea, :collisionOn, :myInventory
 
 
   def initialize(worldX, worldY, width, height)
@@ -69,12 +71,13 @@ class Player < Sprite
 
     @collisionOn = false
 
+    @myInventory = Inventory.new()
 
   end
 
 
 #-------------------------------- Update -----------------------------------------
-  def updatePlayer(monsters, map, npc)
+  def updatePlayer(monsters, map, npc, chests)
 
 
     @collisionOn = false
@@ -88,6 +91,8 @@ class Player < Sprite
       puts 'You are hitting a monster'
     end
     CCHECK.checkEntity_Collide_SingleTarget(self, npc)
+    CCHECK.checkEntity_Collide_SingleTarget(self, chests)
+
     self.move()
 
   end
