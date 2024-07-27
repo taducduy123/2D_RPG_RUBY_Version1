@@ -31,8 +31,7 @@ class Bat < Monster
     if(@exist == true)
       self.DrawMonster(player)
       self.DrawHealthBar(player)
-      #self.debug((player.worldY + player.solidArea.y) / CP::TILE_SIZE, (player.worldX + player.solidArea.x) / CP::TILE_SIZE, player, map, pFinder)
-      #self.randMove(player, map)
+      #self.randMove(player, map, items, npcs)
       self.moveForwardTo((player.worldY + player.solidArea.y) / CP::TILE_SIZE, (player.worldX + player.solidArea.x) / CP::TILE_SIZE, 
                           player, map, pFinder, items, npcs)
     else
