@@ -18,6 +18,8 @@ class Player < Sprite
 
 
   def initialize(worldX, worldY, width, height)
+
+    #1. Image and Animation
     @first_frame = { x: 248 , y: 0, width: 48, height: 50, time: 80, flip: :none }
     super(
       'Image/Warrior_Red.png',
@@ -55,8 +57,7 @@ class Player < Sprite
       }
     )
 
-
-      #health bar
+    #2. Health Bar
     @healthbar = HealthBar.new(
       200,
       200,
@@ -65,64 +66,74 @@ class Player < Sprite
       100
     )
 
+    #3. Speed
     @speed = 3
-    #@direction = nil
+
+    #4. Direction and Facing
     @facing = 'right'
     @upDirection = false
     @downDirection = false
     @leftDirection = false
     @rightDirection = false
 
-    #
+    #5. World Coordinate
     @worldX = worldX
     @worldY = worldY
 
-    #Area for collision
+    #6. Solid Area to check collision with other objects
     @solidArea = Rectangle.new(
       x: 8, y: 16,            # Position
       width: 32, height: 32,  # Size
       opacity: 0
     )
-
     @collisionOn = false
-    @interacting = -1
+
     @myInventory = Inventory.new()
 
   end
 
 
-#-------------------------------- Update -----------------------------------------
-  def updatePlayer(monsters, map, npcs, objects)
+#-------------------------------- Very Usefull Methods -----------------------------------------
 
+  def checkCollision(monsters, map, items, npcs)
 
     @collisionOn = false
-    #1. Check if player collides wall
+    @collision_with_monster_index = -1
+    @collision_with_npc_index = -1
+    @collision_with_item_index = -1
+
+    #1. Check if player collides any wall
     CCHECK.checkTile(self, map)
 
-    #2. Check if player collides any monster
-    monsterIndex = CCHECK.checkEntity_Collide_AllTargets(self, monsters)
-    if(monsterIndex != -1)
-      puts 'You are hitting a monster'
-    end
+    #2. Check if player collides any Monster
+    @collision_with_monster_index = CCHECK.checkEntity_Collide_AllTargets(self, monsters)
 
-    #3. Check if player collides any NPC
-    for i in 0..(npcs.length - 1)
-      CCHECK.checkEntity_Collide_SingleTarget(self, npcs[i])
-    end
+    #3. Check if monster collides any Item in the map
+    @collision_with_item_index = CCHECK.checkEntity_Collide_AllTargets(self, items)
 
-    #4. Check if player collides any object in the map
-    for i in 0..(objects.length - 1)
-      CCHECK.checkEntity_Collide_SingleTarget(self, objects[i])
-    end
-
-    #Move
-    self.move()
+    #4. Check if player collides any NPC in the map
+    @collision_with_npc_index = CCHECK.checkEntity_Collide_AllTargets(self, npcs)
 
   end
 
 
+#-------------------------------- Update -----------------------------------------
+  def updatePlayer(monsters, map, npcs, items)
+
+    #1. Move
+    self.move(monsters, map, npcs, items)
+
+  end
+
+
+
 #-------------------------------- Move -----------------------------------------
-  def move()
+  def move(monsters, map, npcs, items)
+
+    #Check Collision before moving
+    checkCollision(monsters, map, items, npcs)
+
+    #If no collision is detected, then let player move
     if(@collisionOn == false)
       if(self.upDirection == true)
         @worldY -= @speed
@@ -146,6 +157,7 @@ class Player < Sprite
     when 'right'
       if @leftDirection
         @facing = 'left'
+        self.play animation: :walk, loop: true, flip: :horizontal
       else
         self.play(animation: :walk)
       end

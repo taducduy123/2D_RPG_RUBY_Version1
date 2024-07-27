@@ -19,13 +19,13 @@ module WorldHandler
     def DrawObject(object, player)
         screenX = object.worldX - player.worldX + player.x
         screenY = object.worldY - player.worldY + player.y
-        if (object.worldX + CP::TILE_SIZE + 20 >= player.worldX - player.x &&
-            object.worldX - CP::TILE_SIZE - 20 <= player.worldX + player.x &&
-            object.worldY + CP::TILE_SIZE + 20 >= player.worldY - player.y &&
-            object.worldY - CP::TILE_SIZE - 20 <= player.worldY + player.y)
+        # if (object.worldX + CP::TILE_SIZE + 20 >= player.worldX - player.x &&
+        #     object.worldX - CP::TILE_SIZE - 20 <= player.worldX + player.x &&
+        #     object.worldY + CP::TILE_SIZE + 20 >= player.worldY - player.y &&
+        #     object.worldY - CP::TILE_SIZE - 20 <= player.worldY + player.y)
 
             object.image.x = screenX
             object.image.y = screenY
-        end
+        # end
     end
 end
