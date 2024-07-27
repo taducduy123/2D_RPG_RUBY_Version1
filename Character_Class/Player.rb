@@ -12,9 +12,18 @@ include CCHECK
 
 
 class Player < Sprite
-  attr_reader :x, :y, :speed, :worldX, :worldY
-  attr_accessor :upDirection, :downDirection, :leftDirection,
-  :rightDirection, :solidArea, :collisionOn, :myInventory, :interacting
+  attr_reader :x, :y, 
+              :worldX, :worldY,
+              :speed,
+              :collision_with_monster_index
+              :collision_with_npc_index
+              :collision_with_item_index
+
+  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, 
+                :solidArea, 
+                :collisionOn, 
+                :myInventory, 
+                :interacting
 
 
   def initialize(worldX, worldY, width, height)
@@ -87,8 +96,17 @@ class Player < Sprite
       width: 32, height: 32,  # Size
       opacity: 0
     )
-    @collisionOn = false
 
+    #7. State of Collision
+    @collisionOn = false                            # Whenever player collides any objects (NPCs, Items, Monsters), this will turn true, otherwise false.
+    @collision_with_monster_index = -1              # When collision with Monster. The collided Monster is identified by array index
+    @collision_with_npc_index = -1                  # When collision with NPC. The collided NPC is identified by array index
+    @collision_with_item_index = -1                 # When collision with Item. The collided Item is identified by array index
+
+    #8. State of interaction
+    @interacting
+
+    #9. Inventory
     @myInventory = Inventory.new()
 
   end
@@ -178,14 +196,7 @@ class Player < Sprite
     @first_frame
     super
   end
+  
 end
 
 
-# player = Player.new(48, 48)
-# #Setting Window
-# set width: SCREEN_HEIGHT
-# set height: SCREEN_WIDTH
-# set title: "20x20 Grid RPG"
-# set resizable: true
-# #set fullscreen: true
-# show

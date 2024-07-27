@@ -22,6 +22,10 @@ class Bat < Monster
     )
     @image.play
 
+    # Health Bar
+    @healthBar = HealthBar.new(100, 100, -999, -999, 48)
+
+    # Speed
     @speed = 1
   end
 

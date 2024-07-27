@@ -10,7 +10,11 @@ include CCHECK
 
 
 class Monster < Sprite
-  attr_reader :x, :y, :speed, :worldX, :worldY, :moveCounter
+  attr_reader :x, :y,
+              :worldX, :worldY,
+              :speed, 
+              :moveCounter
+
   attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, 
                 :solidArea, 
                 :collisionOn, 
@@ -24,7 +28,7 @@ class Monster < Sprite
     @image = nil
 
     #2. Health Bar
-    @healthBar = HealthBar.new(100, 100, -999, -999, 48)
+    @healthBar = nil
 
     #3. Speed
     @speed = nil
@@ -52,13 +56,13 @@ class Monster < Sprite
     @exist = true
 
 
-    #This will be convenient for move function
+    #This will be convenient for random move function
     @moveCounter = 0
 
-    #This is used to find the shortest path
+    #This is used to find the shortest path 
+    #(if you want stop monster pursue you, let change @onPath = false)
     @onPath = false
 
-    @counter = 0
   end
 
 
@@ -142,11 +146,10 @@ class Monster < Sprite
         @rightDirection = true
       end
 
-
       # Checking collision before moving
-      #@collisionOn = false
       self.checkCollision(player, map, items, npcs)
 
+      # If no collison is detected, then move monster
       if(@collisionOn == false)
         if(self.upDirection == true)
           @worldY -= @speed
@@ -179,6 +182,7 @@ class Monster < Sprite
       # Checking collision before moving
       self.checkCollision(player, map, items, npcs)
 
+      # If no collision is detected, then move the monster
       if(@collisionOn == false)
         if(self.upDirection == true)
           @worldY -= @speed
@@ -195,13 +199,16 @@ class Monster < Sprite
 
 
 #---------------------------- Let monster follow the selected shortest path -----------------------------
+# This function changes @onPath = true whenever there exists a path. Also, this function navigate the
+# monster so that the monster follows the found path.
   def searchPath(goalRow, goalCol, player, map, pFinder, items, npcs)
     startRow = (@worldY + @solidArea.y) / CP::TILE_SIZE
     startCol = (@worldX + @solidArea.x) / CP::TILE_SIZE
 
+    # Convert data of map into data of graph
     pFinder.setNodes(startRow, startCol, goalRow, goalCol, map)
 
-    if (pFinder.search() == true)
+    if (pFinder.search() == true)       # if found path
       @onPath = true
 
       # next worldX and worldY
