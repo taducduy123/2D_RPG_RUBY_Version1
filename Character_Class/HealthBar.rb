@@ -4,8 +4,9 @@ class HealthBar
 
   attr_reader :hp
   attr_writer :hp
+  attr_accessor :heart, :rec1, :rec2
 
-  def initialize(hp,maxHp,x,y,leng)
+  def initialize(hp, maxHp, x, y, leng)
     @hp = hp
     @maxHp = maxHp
     #the heart icon
