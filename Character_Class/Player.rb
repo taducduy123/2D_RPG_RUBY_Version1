@@ -145,6 +145,7 @@ class Player < Sprite
     when 'right'
       if @leftDirection
         @facing = 'left'
+        self.play animation: :walk, loop: true, flip: :horizontal
       else
         self.play(animation: :walk)
       end

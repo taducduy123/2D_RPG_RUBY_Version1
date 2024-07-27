@@ -81,7 +81,12 @@ class Monster < Sprite
   end
 
 
+  def throwObject()
 
+    @image.x = -20 * CP::TILE_SIZE
+    @image.y = -20 * CP::TILE_SIZE
+
+  end
 
   
 
