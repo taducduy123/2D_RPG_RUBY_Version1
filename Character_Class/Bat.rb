@@ -1,4 +1,5 @@
 require 'ruby2d'
+require_relative 'HealthBar'
 require_relative '../ImageHandler' # to read dimemsion of image ==> must install (gem install rmagick)
 require_relative '../CollisionChecker'
 require_relative '../CommonParameter'
@@ -8,6 +9,7 @@ include CCHECK
 class Bat < Monster
   def initialize(wordlX, worldY, width, height, player)
     super(wordlX, worldY, width, height)
+    
     @image = Sprite.new(
       'Image/Bat.png',
       x: @worldX - player.worldX + player.x,
@@ -20,15 +22,33 @@ class Bat < Monster
     )
     @image.play
 
-    @speed = 10
+    @speed = 1
   end
 
 
 #-------------------------------- Override Methods -----------------------------------------
   def updateMonster(player, map, pFinder)
       self.DrawMonster(player)
-      self.randMove(player, map)
+      #self.debug((player.worldY + player.solidArea.y) / CP::TILE_SIZE, (player.worldX + player.solidArea.x) / CP::TILE_SIZE, player, map, pFinder)
+      #self.randMove(player, map)
+      self.moveForwardTo((player.worldY + player.solidArea.y) / CP::TILE_SIZE, (player.worldX + player.solidArea.x) / CP::TILE_SIZE, player, map, pFinder)
   end
+
+
+
+
+  # def debug(goalRow, goalCol, player, map, pFinder)
+  #   startRow = (@worldY + @solidArea.y) / CP::TILE_SIZE
+  #   startCol = (@worldX + @solidArea.x) / CP::TILE_SIZE
+  
+  #   pFinder.setNodes(startRow, startCol, goalRow, goalCol, map)
+
+  #   pFinder.search()
+  #   puts "#{pFinder.pathList[0].row}     #{pFinder.pathList[0].col} \n"
+
+    
+  # end
+
 
 end
 

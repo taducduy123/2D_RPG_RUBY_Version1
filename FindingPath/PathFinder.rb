@@ -96,7 +96,7 @@ class PathFinder
 
     #
     def search()
-        while (@goalReached == false && @step < 500) do
+        while (@goalReached == false && @step <= CP::MAX_WORLD_ROWS * CP::MAX_WORLD_COLS) do
             row = @currentNode.row
             col = @currentNode.col
 
@@ -145,12 +145,13 @@ class PathFinder
             # After the loop, openList[bestNodeIndex] is the next step (= currentNode)
             @currentNode = @openList[bestNodeIndex]
 
-            if (@currentNode == @goalNode)
+            if (@currentNode.row == @goalNode.row && @currentNode.col == @goalNode.col)
                 @goalReached = true
                 self.trackThePath()
             end
             @step = @step + 1
         end
+        @step = 0
         return @goalReached
     end
 
@@ -176,3 +177,23 @@ class PathFinder
         end
     end
 end
+
+
+
+
+# map = GameMap.new
+# pFinder = PathFinder.new
+# pFinder.setNodes(2, 2, 35, 35, map)
+# pFinder.search
+
+
+
+#     for i in 0..(pFinder.pathList.length - 1)
+#         puts "#{pFinder.pathList[i].row}      #{pFinder.pathList[i].col} \n"
+#     end
+
+
+
+
+
+

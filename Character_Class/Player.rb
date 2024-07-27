@@ -4,6 +4,8 @@ require_relative '../CollisionChecker'
 require_relative '../CommonParameter'
 require_relative '../Item_Class/Player_Inventory'
 
+
+require_relative 'HealthBar'
 include CCHECK
 
 
@@ -51,8 +53,20 @@ class Player < Sprite
 
       }
     )
+
+
+      #health bar
+    @healthbar = HealthBar.new(
+      200,
+      200,
+      CP::SCREEN_WIDTH / 2 - (CP::TILE_SIZE/2) - (width*2/3),
+      CP::SCREEN_HEIGHT / 2 - (CP::TILE_SIZE/2) - 10,
+      100
+    )
+
     @speed = 3
     #@direction = nil
+    @facing = 'right'
     @upDirection = false
     @downDirection = false
     @leftDirection = false
@@ -103,11 +117,14 @@ class Player < Sprite
     if(@collisionOn == false)
       if(self.upDirection == true)
         @worldY -= @speed
-      elsif(self.downDirection == true)
+      end
+      if(self.downDirection == true)
         @worldY += @speed
-      elsif(self.leftDirection == true)
+      end
+      if(self.leftDirection == true)
         @worldX -= @speed
-      elsif(self.rightDirection == true)
+      end
+      if(self.rightDirection == true)
         @worldX += @speed
       end
     end
@@ -116,10 +133,21 @@ class Player < Sprite
 #-------------------------------- Setter Methods -----------------------------------------
 
   def runAnimation()
-    self.play(animation: :walk)
-  end
-  def runAnimation_left()
-    self.play animation: :walk , loop: true, flip: :horizontal
+    case @facing
+    when 'right'
+      if @leftDirection
+        @facing = 'left'
+      else
+        self.play(animation: :walk)
+      end
+    when 'left'
+      if @rightDirection
+        self.play(animation: :walk)
+        @facing = 'right'
+      else
+        self.play animation: :walk, loop: true, flip: :horizontal
+      end
+    end
   end
 
 #-------------------------------- Stop Moving -----------------------------------------
