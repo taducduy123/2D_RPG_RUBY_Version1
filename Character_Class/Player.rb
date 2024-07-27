@@ -63,6 +63,7 @@ class Player < Sprite
 
     @speed = 3
     #@direction = nil
+    @facing = 'right'
     @upDirection = false
     @downDirection = false
     @leftDirection = false
@@ -104,11 +105,14 @@ class Player < Sprite
     if(@collisionOn == false)
       if(self.upDirection == true)
         @worldY -= @speed
-      elsif(self.downDirection == true)
+      end
+      if(self.downDirection == true)
         @worldY += @speed
-      elsif(self.leftDirection == true)
+      end
+      if(self.leftDirection == true)
         @worldX -= @speed
-      elsif(self.rightDirection == true)
+      end
+      if(self.rightDirection == true)
         @worldX += @speed
       end
     end
@@ -124,10 +128,21 @@ class Player < Sprite
 #-------------------------------- Setter Methods -----------------------------------------
 
   def runAnimation()
-    self.play(animation: :walk)
-  end
-  def runAnimation_left()
-    self.play animation: :walk , loop: true, flip: :horizontal
+    case @facing
+    when 'right'
+      if @leftDirection
+        @facing = 'left'
+      else
+        self.play(animation: :walk)
+      end
+    when 'left'
+      if @rightDirection
+        self.play(animation: :walk)
+        @facing = 'right'
+      else
+        self.play animation: :walk, loop: true, flip: :horizontal
+      end
+    end
   end
 
 #-------------------------------- Stop Moving -----------------------------------------

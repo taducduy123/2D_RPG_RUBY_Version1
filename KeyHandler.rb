@@ -14,7 +14,7 @@ def handle_key_down(event, player)
       player.downDirection = true
       #player.direction = "down"
     when 'a'
-      player.runAnimation_left()
+      player.runAnimation()
       player.leftDirection = true
       #player.direction = "left"
     when 'd'
@@ -44,6 +44,11 @@ def get_key_input(player)
   on :key_held do |event|
     handle_key_down(event, player)
     #puts "You are PRESSING a key\n"
+  end
+
+  on :key_down do |event|
+    handle_key_down(event, player)
+
   end
 
   on :key_up do |event|

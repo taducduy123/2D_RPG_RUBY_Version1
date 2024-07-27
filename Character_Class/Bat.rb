@@ -1,4 +1,5 @@
 require 'ruby2d'
+require_relative 'HealthBar'
 require_relative '../ImageHandler' # to read dimemsion of image ==> must install (gem install rmagick)
 require_relative '../CollisionChecker'
 require_relative '../CommonParameter'
@@ -8,6 +9,7 @@ include CCHECK
 class Bat < Monster
   def initialize(wordlX, worldY, width, height, player)
     super(wordlX, worldY, width, height)
+    
     @image = Sprite.new(
       'Image/Bat.png',
       x: @worldX - player.worldX + player.x,

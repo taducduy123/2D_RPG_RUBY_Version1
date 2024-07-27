@@ -16,6 +16,8 @@ class Monster < Sprite
   def initialize(worldX, worldY, width, height)
 
     @image = nil
+    #@health = HealthBar.new()
+
 
     #Direction and Speed
     @speed = nil
@@ -63,6 +65,25 @@ class Monster < Sprite
         @image.y = screenY
     # end
   end
+
+  def DrawHealthBar(player)
+    #Where to draw monster in the screen (window)
+    screenX = @worldX - player.worldX + player.x
+    screenY = @worldY - player.worldY + player.y
+    # if (@worldX + 3*CP::TILE_SIZE >= player.worldX - player.x &&
+    #     @worldX - 3*CP::TILE_SIZE <= player.worldX + player.x &&
+    #     @worldY + 3*CP::TILE_SIZE >= player.worldY - player.y &&
+    #     @worldY - 3*CP::TILE_SIZE <= player.worldY + player.y)
+
+        @image.x = screenX
+        @image.y = screenY
+    # end
+  end
+
+
+
+
+  
 
 
   #

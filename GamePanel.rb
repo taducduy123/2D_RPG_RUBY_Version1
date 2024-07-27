@@ -24,7 +24,7 @@ map = GameMap.new()
 #------------------------- 1.2. Player Section --------------------------------
 player = Player.new(1*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
 
-#------------------------- 1.3. Monster Section --------------------------------
+#------------------------- 1.3. Monsters Section --------------------------------
 monsters = [Bat.new(38*CP::TILE_SIZE, 38*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
             # Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
             # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
@@ -61,7 +61,9 @@ get_key_input(player)
 pFinder = PathFinder.new()
 #------------------------------------ 2.3. Audio/Sound ------------------------------
 music = Music.new('Sound/Dungeon.wav')
+music.loop = true
 music.play
+
 
 
 #3. Core of 2D game
