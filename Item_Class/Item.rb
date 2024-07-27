@@ -5,9 +5,10 @@ require_relative '../WorldHandler'
 require_relative '../ImageHandler'
 require_relative 'Loot_item'
 require_relative '../WorldHandler'
-class Chest
-  attr_accessor :image, :worldX,  :worldY, :solidArea, :upDirection, :downDirection, :leftDirection,
-  :rightDirection, :collisionOn
+
+
+class Item
+  attr_accessor :image, :worldX,  :worldY, :solidArea, :collisionOn
 
   def initialize(worldX, worldY, inside_The_Chest)
      @image = Sprite.new(
@@ -21,14 +22,15 @@ class Chest
       animations: {open: 1..4},
 
      )
+
      @opened = false
      @Inside_The_Chest = inside_The_Chest
      @worldX = worldX
      @worldY = worldY
 
      @solidArea = Rectangle.new(
-      x: 8, y: 16,            # Position
-      width: 32, height: 32,  # Size
+      x: 0, y: 0,             # Position
+      width: 48, height: 48,  # Size
       opacity: 0
     )
      @collisionOn = false
@@ -49,7 +51,7 @@ class Chest
     end
   end
 
-  def updateChest(player, map, pFinder, items, npcs)
+  def updateItem(player)
     WorldHandler::DrawObject(self, player)
     if CCHECK.checkEntity_Collide_SingleTarget(player, self) == true
       PlayerInteract(player)

@@ -24,18 +24,24 @@ map = GameMap.new()
 player = Player.new(1*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
 
 #------------------------- 1.3. Monsters Section --------------------------------
-monsters = [Bat.new(8*CP::TILE_SIZE, 8*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
+monsters = [
+            Bat.new(8*CP::TILE_SIZE, 8*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
             # Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
             # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
            ]
-        
-npcs = [Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3, CP::TILE_SIZE, CP::TILE_SIZE)
+      
+#------------------------- 1.4. NPCs Section --------------------------------      
+npcs = [
+          Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3, CP::TILE_SIZE, CP::TILE_SIZE)
         
        ]
-insideChest = Meat.new
-items = [Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 5, insideChest)
 
-          ]
+#------------------------- 1.4. Items Section --------------------------------      
+insideChest = Meat.new
+items = [
+          Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 5, insideChest)
+
+        ]
 
 
 #------------------------- 1.4. Text Section --------------------------------
@@ -80,23 +86,23 @@ update do
     #1. Update Player
     player.updatePlayer(monsters, map, npcs, items)
 
-    #2. Update all Monsters
+    #2. Update Monsters
     for i in 0..(monsters.length - 1)
-      monsters[i].updateMonster(player, map, pFinder, items)
+      monsters[i].updateMonster(player, map, pFinder, items, npcs)
     end
 
     #3. Update Texts
     text.text = "Coordinate: #{player.worldX}  #{player.worldY} "
     text1.text = "Coordinate Monster: #{monsters[0].worldX}    #{monsters[0].worldY}"
 
-    #4. Update npc
+    #4. Update NPCs
     for i in 0..(npcs.length - 1)
       npcs[i].updateNPC(player, map)
     end
 
-    #5. Update object in map
+    #5. Update Items in map
     for i in 0..(items.length - 1)
-      items[i].updateChest(player)
+      items[i].updateChest(player, map, pFinder, items, npcs)
     end
     
     #5d. Update Map
@@ -118,3 +124,5 @@ set background: 'black'
 
 #------------------------------------------------------- Show window ---------------------------------------
 show
+
+
