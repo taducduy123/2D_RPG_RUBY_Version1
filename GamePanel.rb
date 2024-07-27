@@ -8,6 +8,10 @@ require_relative 'Character_Class/Monster'
 require_relative 'Character_Class/Bat'
 require_relative 'FindingPath/Node'
 require_relative 'FindingPath/PathFinder'
+require_relative 'Character_Class/Warrior'
+require_relative 'Item_Class/Chest'
+require_relative 'Item_Class/Loot_item'
+
 include CCHECK
 
 
@@ -42,6 +46,14 @@ text = Text.new(
   #z: 10
 )
 
+firstNPC = Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3,
+CP::TILE_SIZE, CP::TILE_SIZE)
+insideChest = Meat.new
+newchest = Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 5,insideChest)
+
+#1.1
+pFinder = PathFinder.new()
+=======
 text1 = Text.new(
   '',
   x: 450, y: 0,
@@ -70,7 +82,7 @@ music.play
 #------------------------------------------------------- Game Loop ------------------------------------------
 update do
     #1. Update Player
-    player.updatePlayer(monsters, map)
+    player.updatePlayer(monsters, map, firstNPC, newchest)
 
     #2. Update all Monsters
     for i in 0..(monsters.length - 1)
@@ -78,6 +90,12 @@ update do
     end
 
     #3. Update Texts
+    text.text = "Coordinate: #{player.worldX}  #{player.worldY} \n"
+
+    # Update npc
+    firstNPC.updateNPC(player, map)
+
+    newchest.updateChest(player)
     text.text = "Coordinate: #{player.worldX}  #{player.worldY} "
     text1.text = "Coordinate Monster: #{monsters[0].worldX}    #{monsters[0].worldY}"
     

@@ -56,4 +56,17 @@ def get_key_input(player)
     player.stop                             #stop animation when do not press any key
     #puts "You are REALEASING a key\n"
   end
+ #handles inventory
+  on :key_down do |event|
+    case event.key
+    when 'i'
+      if player.myInventory.visible
+        player.myInventory.hide
+        player.myInventory.visible = false
+      else
+        player.myInventory.visible = true
+        player.myInventory.display
+      end
+    end
+  end
 end
