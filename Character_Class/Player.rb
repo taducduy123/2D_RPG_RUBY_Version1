@@ -58,13 +58,14 @@ class Player < Sprite
     )
 
     #2. Health Bar
-    @healthbar = HealthBar.new(
+    @healthBar = HealthBar.new(
       200,
       200,
       CP::SCREEN_WIDTH / 2 - (CP::TILE_SIZE/2) - (width*2/3),
       CP::SCREEN_HEIGHT / 2 - (CP::TILE_SIZE/2) - 10,
       100
     )
+    @healthBar.heart.x = CP::SCREEN_WIDTH / 2 - (CP::TILE_SIZE/2) - (width*2/3) - 15
 
     #3. Speed
     @speed = 3
