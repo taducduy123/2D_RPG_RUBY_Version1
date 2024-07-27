@@ -93,7 +93,7 @@ end
 #Setting Window
 set width: CP::SCREEN_WIDTH
 set height: CP::SCREEN_HEIGHT
-set title: "Grid RPG"
+set title: "Simulating Hero's Adventure (RPG GAME) with Ruby "
 set resizable: true
 set background: 'black'
 #set fullscreen: true
