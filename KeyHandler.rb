@@ -39,7 +39,7 @@ def handle_key_up(event, player)
 end
 
 #---------------------------------------- Set up Player to be moveable --------------------------------------
-def get_key_input(player)
+def get_key_input(player, interact_obj)
 
   on :key_held do |event|
     handle_key_down(event, player)
@@ -67,6 +67,16 @@ def get_key_input(player)
         player.myInventory.visible = true
         player.myInventory.display
       end
+    when 'left'
+      player.myInventory.move_cursor(-1, 0) if player.myInventory.visible
+    when 'right'
+      player.myInventory.move_cursor(1, 0) if player.myInventory.visible
+    when 'up'
+      player.myInventory.move_cursor(0, -1) if player.myInventory.visible
+    when 'down'
+      player.myInventory.move_cursor(0, 1) if player.myInventory.visible
+    when 'e'
+      interact_obj[player.interacting].PlayerInteract(player) if player.interacting >=0
     end
   end
 end

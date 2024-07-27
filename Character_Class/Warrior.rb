@@ -4,6 +4,7 @@ require_relative '../CommonParameter'
 require_relative '../ImageHandler'
 require_relative '../Dialogue/ChatBubble'
 require_relative 'NPC'
+require_relative '../sharedData'
 include CCHECK
 
 class Warrior < NPC
@@ -34,15 +35,16 @@ class Warrior < NPC
 
   def startDialogue
     chatprogress = 1
-    chatbox = ChatBubble.new(0, Window.height - Window.height / 5,
+    newchat = ChatBubble.new(0, Window.height - Window.height / 5,
     Window.width ,Window.height / 5, @chatList[0])
-
+    SharedData.shared_chat_array << newchat
     Window.on :key_down do |event|
       if event.key == 'x'
         if chatprogress > @chatList.size - 1
-          chatbox.hide
+          newchat.hide
+          SharedData.clear_array
         end
-        chatbox.set_text(@chatList[chatprogress])
+        newchat.set_text(@chatList[chatprogress])
         chatprogress += 1
       end
     end

@@ -16,7 +16,7 @@ class ChatBubble
 
     @text = Text.new(
       message,
-      x: x + Window.height / 3, y: y + 10,
+      x: x + width / 3, y: y + 10,
       style: 'bold',
       size: 15,
       color: 'black'

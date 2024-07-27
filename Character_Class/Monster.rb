@@ -83,7 +83,7 @@ class Monster < Sprite
 
 
 
-  
+
 
 
   #
@@ -153,10 +153,10 @@ class Monster < Sprite
     self.searchPath(goalRow, goalCol, player, map, pFinder, items)
     #puts "#{@onPath} \n"
     #if path found
-    if(@onPath == true)  
-      
+    if(@onPath == true)
+
       @counter = @counter + 1
-      puts "MOVINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG + #{@counter}\n"
+      # puts "MOVINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG + #{@counter}\n"
       # Checking collision before moving
       @collisionOn = false
       self.checkCollision(player, map, items)
@@ -197,7 +197,7 @@ class Monster < Sprite
       # Entity's solid area
       enLeftX   = @worldX + @solidArea.x
       enRightX  = @worldX + @solidArea.x + @solidArea.width
-      enTopY    = @worldY + @solidArea.y 
+      enTopY    = @worldY + @solidArea.y
       enBottomY = @worldY + @solidArea.y + @solidArea.height
 
 

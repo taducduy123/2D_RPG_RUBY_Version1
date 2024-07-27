@@ -28,9 +28,9 @@ monsters = [Bat.new(38*CP::TILE_SIZE, 38*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_
             # Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
             # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
            ]
-        
+
 npcs = [Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3, CP::TILE_SIZE, CP::TILE_SIZE)
-        
+
        ]
 insideChest = Meat.new
 items = [Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 5, insideChest)
@@ -64,7 +64,7 @@ text1 = Text.new(
 
 #2. Include necessary tools
 #------------------------------------ 2.1. Get user's input -------------------------
-get_key_input(player)
+get_key_input(player, items)
 #------------------------------------ 2.2. Finding Path -----------------------------
 pFinder = PathFinder.new()
 #------------------------------------ 2.3. Audio/Sound ------------------------------
@@ -96,9 +96,9 @@ update do
 
     #5. Update object in map
     for i in 0..(items.length - 1)
-      items[i].updateChest(player)
+      items[i].updateChest(player, i)
     end
-    
+
     #5d. Update Map
     map.updateMap(player, pFinder)
 

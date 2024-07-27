@@ -5,9 +5,12 @@ require_relative '../WorldHandler'
 require_relative '../ImageHandler'
 require_relative 'Loot_item'
 require_relative '../WorldHandler'
+require_relative '../Dialogue/ChatBubble'
+require_relative 'Interact'
+
 class Chest
-  attr_accessor :image, :worldX,  :worldY, :solidArea, :upDirection, :downDirection, :leftDirection,
-  :rightDirection, :collisionOn
+  attr_accessor :image, :worldX,  :worldY, :solidArea, :upDirection,
+  :downDirection, :leftDirection, :rightDirection, :collisionOn, :interactRange, :activemess
 
   def initialize(worldX, worldY, inside_The_Chest)
      @image = Sprite.new(
@@ -19,45 +22,63 @@ class Chest
       clip_width: width_Of('Image/chest.png') / 5,
       clip_height: height_Of('Image/chest.png'),
       animations: {open: 1..4},
+      time: 300
 
      )
-     @opened = false
-     @Inside_The_Chest = inside_The_Chest
+     @Inside_The_Chest = []
+
+     @Inside_The_Chest << inside_The_Chest
+
      @worldX = worldX
+
      @worldY = worldY
 
+     @interactRange = InteractRange.new(worldX,worldY)
+
+     @isEmpty = @Inside_The_Chest.empty?
      @solidArea = Rectangle.new(
       x: 8, y: 16,            # Position
       width: 32, height: 32,  # Size
       opacity: 0
     )
      @collisionOn = false
+     @activemess = ChatBubble.new( 0, Window.height - Window.height / 6,
+     Window.width ,Window.height / 5,"Press E to open")
+     @activemess.hide
   end
 
   def PlayerInteract (player)
-    if @opened == false
-     @image.play animation: :open
 
-      if player.myInventory.IsFull
-        @image.play animation: :close
-        puts "player is full"
-      else
+    @image.play animation: :open
+    if !(@isEmpty)
+      # if player.myInventory.IsFull
+      #   @activemess.set_text("Your inventory is full!")
+      # else
+        puts "item ad"
         player.myInventory.add_to_inventory(@Inside_The_Chest)
+        @activemess.set_text("Item added to your inventory")
         removeItem
-
-      end
+      # end
+    else
+       @activemess.set_text ("Chest is emty")
     end
   end
 
-  def updateChest(player)
+  def updateChest(player, chestId)
     WorldHandler::DrawObject(self, player)
-    if CCHECK.checkEntity_Collide_SingleTarget(player, self) == true
-      PlayerInteract(player)
-      # put "hi"
-    end
+      if CCHECK.checkEntity_Collide_SingleTarget(player,@interactRange) == true
+        @activemess.show
+        player.interacting = chestId
+      else
+        @activemess.hide
+        player.interacting = -1
+      end
+
   end
 
   def removeItem()
-    @Inside_The_Chest.remove
+    @Inside_The_Chest.each(&:remove)
+    @Inside_The_Chest.clear
+    @isEmpty = true
   end
 end

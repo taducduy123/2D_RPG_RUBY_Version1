@@ -16,9 +16,9 @@ module CCHECK
 
 #---------------------------- Check if entity collides wall -----------------------------------------
   def checkTile(entity, map)
-    entityLeftWorldX = entity.worldX + entity.solidArea.x 
+    entityLeftWorldX = entity.worldX + entity.solidArea.x
     entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width
-    entityTopWorldY = entity.worldY + entity.solidArea.y 
+    entityTopWorldY = entity.worldY + entity.solidArea.y
     entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height
 
     entityLeftCol = entityLeftWorldX / CP::TILE_SIZE
@@ -40,7 +40,7 @@ module CCHECK
             entity.collisionOn = true
         end
       end
-      
+
 
     elsif entity.downDirection == true
       entityBottomRow = (entityBottomWorldY + entity.speed) / CP::TILE_SIZE
@@ -53,20 +53,20 @@ module CCHECK
             entity.collisionOn = true
         end
       end
-      
+
 
     elsif entity.leftDirection == true
       entityLeftCol = (entityLeftWorldX - entity.speed) / CP::TILE_SIZE
       if(entityLeftCol < 0)                                       # Check map boundary
         entity.collisionOn = true
-      else 
+      else
         tileNum1 = map.tileManager[entityTopRow][entityLeftCol]
         tileNum2 = map.tileManager[entityBottomRow][entityLeftCol]
         if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
             entity.collisionOn = true
         end
       end
-      
+
 
     elsif entity.rightDirection == true
       entityRightCol = (entityRightWorldX + entity.speed) / CP::TILE_SIZE
@@ -78,7 +78,7 @@ module CCHECK
         if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
             entity.collisionOn = true
         end
-      end     
+      end
     end
   end
 
@@ -86,12 +86,12 @@ module CCHECK
 
 
 #------------------------------------ Check entity collide a single target --------------------------------
-  def checkEntity_Collide_SingleTarget(entity, target)         
-  
+  def checkEntity_Collide_SingleTarget(entity, target)
+
     entitySolidX = nil, entitySolidY = nil,  targetSolidX = nil, targetSolidY = nil
-   
+
     #Get entity's solid area Wolrd Position
-    entitySolidX = entity.worldX + entity.solidArea.x 
+    entitySolidX = entity.worldX + entity.solidArea.x
     entitySolidY = entity.worldY + entity.solidArea.y
 
     ##Get target's solid area Wolrd Position
@@ -103,7 +103,7 @@ module CCHECK
       if(intersect(entitySolidX, entitySolidY, entity.solidArea.width, entity.solidArea.height,
                     targetSolidX, targetSolidY, target.solidArea.width, target.solidArea.height)
         )
-        puts 'Up Direction Collision'
+        #puts 'Up Direction Collision'
         entity.collisionOn = true
         return true
       end
@@ -113,7 +113,7 @@ module CCHECK
       if(intersect(entitySolidX, entitySolidY, entity.solidArea.width, entity.solidArea.height,
                     targetSolidX, targetSolidY, target.solidArea.width, target.solidArea.height)
         )
-        puts 'Down Direction Collision'
+        #puts 'Down Direction Collision'
         entity.collisionOn = true
         return true
       end
@@ -123,7 +123,7 @@ module CCHECK
       if(intersect(entitySolidX, entitySolidY, entity.solidArea.width, entity.solidArea.height,
                     targetSolidX, targetSolidY, target.solidArea.width, target.solidArea.height)
         )
-        puts 'Left Direction Collision'
+        #puts 'Left Direction Collision'
         entity.collisionOn = true
         return true
       end
@@ -133,7 +133,7 @@ module CCHECK
       if(intersect(entitySolidX, entitySolidY, entity.solidArea.width, entity.solidArea.height,
                     targetSolidX, targetSolidY, target.solidArea.width, target.solidArea.height)
         )
-        puts 'Right Direction Collision'
+        #puts 'Right Direction Collision'
         entity.collisionOn = true
         return true
       end
@@ -141,7 +141,7 @@ module CCHECK
       if(intersect(entitySolidX, entitySolidY, entity.solidArea.width, entity.solidArea.height,
                     targetSolidX, targetSolidY, target.solidArea.width, target.solidArea.height)
         )
-        puts 'Undefine_Direction Collision'
+        #puts 'Undefine_Direction Collision'
         entity.collisionOn = true
         return true
       end
@@ -161,18 +161,9 @@ module CCHECK
         if(checkEntity_Collide_SingleTarget(entity, targets[i]) == true)
           index = i
         end
-      end   
+      end
     end
     return index
   end
 
-
-  
-
-
 end
-
-
-
-
-

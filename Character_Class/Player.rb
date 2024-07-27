@@ -13,7 +13,8 @@ include CCHECK
 
 class Player < Sprite
   attr_reader :x, :y, :speed, :worldX, :worldY
-  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, :solidArea, :collisionOn, :myInventory
+  attr_accessor :upDirection, :downDirection, :leftDirection,
+  :rightDirection, :solidArea, :collisionOn, :myInventory, :interacting
 
 
   def initialize(worldX, worldY, width, height)
@@ -84,7 +85,7 @@ class Player < Sprite
     )
 
     @collisionOn = false
-
+    @interacting = -1
     @myInventory = Inventory.new()
 
   end
