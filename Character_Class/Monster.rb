@@ -11,7 +11,12 @@ include CCHECK
 
 class Monster < Sprite
   attr_reader :x, :y, :speed, :worldX, :worldY, :moveCounter
-  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, :solidArea, :collisionOn, :image, :onPath
+  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, 
+                :solidArea, 
+                :collisionOn, 
+                :image, 
+                :onPath,
+                :exist
 
   def initialize(worldX, worldY, width, height)
 
@@ -19,7 +24,7 @@ class Monster < Sprite
     @image = nil
 
     #2. Health Bar
-    #@health = HealthBar.new()
+    @healthBar = HealthBar.new(100, 100, -999, -999, 48)
 
     #3. Speed
     @speed = nil
@@ -43,9 +48,8 @@ class Monster < Sprite
     )
     @collisionOn = false
 
-
-
-
+    #7. Existence of monster 
+    @exist = true
 
 
     #This will be convenient for move function
@@ -63,44 +67,42 @@ class Monster < Sprite
 #-------------------------------- Very Usefull Methods -----------------------------------------
   #
   def DrawMonster(player)
-    #Where to draw monster in the screen (window)
+    #Where to draw monster on the screen (window)?
     screenX = @worldX - player.worldX + player.x
     screenY = @worldY - player.worldY + player.y
-    # if (@worldX + 3*CP::TILE_SIZE >= player.worldX - player.x &&
-    #     @worldX - 3*CP::TILE_SIZE <= player.worldX + player.x &&
-    #     @worldY + 3*CP::TILE_SIZE >= player.worldY - player.y &&
-    #     @worldY - 3*CP::TILE_SIZE <= player.worldY + player.y)
-
-        @image.x = screenX
-        @image.y = screenY
-    # end
+    
+    @image.x = screenX
+    @image.y = screenY
   end
 
+  #
   def DrawHealthBar(player)
-    #Where to draw monster in the screen (window)
-    screenX = @worldX - player.worldX + player.x
-    screenY = @worldY - player.worldY + player.y
-    # if (@worldX + 3*CP::TILE_SIZE >= player.worldX - player.x &&
-    #     @worldX - 3*CP::TILE_SIZE <= player.worldX + player.x &&
-    #     @worldY + 3*CP::TILE_SIZE >= player.worldY - player.y &&
-    #     @worldY - 3*CP::TILE_SIZE <= player.worldY + player.y)
-
-        @image.x = screenX
-        @image.y = screenY
-    # end
+    #Where to draw health bar in the screen (window)?
+    screenX = @worldX - player.worldX + player.x 
+    screenY = @worldY - player.worldY + player.y - (2/3 * CP::TILE_SIZE)
+   
+    @healthBar.heart.x = screenX - 15
+    @healthBar.heart.y = screenY
+    @healthBar.rec1.x =  screenX 
+    @healthBar.rec1.y =  screenY 
+    @healthBar.rec2.x =  @healthBar.rec1.x + 2
+    @healthBar.rec2.y =  @healthBar.rec1.y + 2
   end
 
-
-  def throwObject()
-
+  #
+  def removeMonster()
     @image.x = -20 * CP::TILE_SIZE
     @image.y = -20 * CP::TILE_SIZE
+    @wordlX = -20 * CP::TILE_SIZE
+    @wordlY = -20 * CP::TILE_SIZE
 
   end
 
 
   #
   def checkCollision(player, map, items, npcs)
+    @collisionOn = false
+
     #1. Check if monster collides any wall
     CCHECK.checkTile(self, map)
 
@@ -142,7 +144,7 @@ class Monster < Sprite
 
 
       # Checking collision before moving
-      @collisionOn = false
+      #@collisionOn = false
       self.checkCollision(player, map, items, npcs)
 
       if(@collisionOn == false)
@@ -161,9 +163,8 @@ class Monster < Sprite
   end
 
 
-  #
+#--------------------------------------- Target Move -----------------------------------------
   def moveForwardTo(goalRow, goalCol, player, map, pFinder, items, npcs)
-
     @upDirection = false
     @downDirection = false
     @leftDirection = false
@@ -171,36 +172,29 @@ class Monster < Sprite
 
     #Search path
     self.searchPath(goalRow, goalCol, player, map, pFinder, items, npcs)
-    #puts "#{@onPath} \n"
+    
     #if path found
-    if(@onPath == true)
+    if(@onPath == true)  
 
-      @counter = @counter + 1
-      # puts "MOVINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG + #{@counter}\n"
       # Checking collision before moving
-      @collisionOn = false
       self.checkCollision(player, map, items, npcs)
 
       if(@collisionOn == false)
         if(self.upDirection == true)
           @worldY -= @speed
-          #puts "being movingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg + #{@counter}\n"
         elsif(self.downDirection == true)
-          @worldY += @speed
-          #puts "being movingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg + #{@counter}\n"
+          @worldY += @speed  
         elsif(self.leftDirection == true)
           @worldX -= @speed
-          #puts "being movingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg + #{@counter}\n"
         elsif(self.rightDirection == true)
           @worldX += @speed
-          #puts "being movingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg + #{@counter}\n"
         end
       end
     end
   end
 
 
-  #
+#---------------------------- Let monster follow the selected shortest path -----------------------------
   def searchPath(goalRow, goalCol, player, map, pFinder, items, npcs)
     startRow = (@worldY + @solidArea.y) / CP::TILE_SIZE
     startCol = (@worldX + @solidArea.x) / CP::TILE_SIZE
@@ -220,7 +214,7 @@ class Monster < Sprite
       enTopY    = @worldY + @solidArea.y
       enBottomY = @worldY + @solidArea.y + @solidArea.height
 
-
+      # Navigate monster
       if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + CP::TILE_SIZE)
         @upDirection = true
       elsif(enTopY < nextY && enLeftX >= nextX && enRightX < nextX + CP::TILE_SIZE)
@@ -267,14 +261,15 @@ class Monster < Sprite
         end
       end
 
-      # Stop when catching the goal
+      # #Stop when catching the goal
       # nextRow = pFinder.pathList[0].row
       # nextCol = pFinder.pathList[0].col
-
       # if(nextRow == goalRow && nextCol == goalCol)
       #   @onPath = false
       # end
     end
   end
+
+
 
 end
