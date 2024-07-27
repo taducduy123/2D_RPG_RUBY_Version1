@@ -4,4 +4,13 @@ class Meat
   def initialize()
     @image_path = 'Image/Meat.png'
   end
+
+  def remove
+    
+  end
+
+
+
+
+  
 end

@@ -15,11 +15,6 @@ require_relative 'Item_Class/Loot_item'
 include CCHECK
 
 
-#
-pFinder = PathFinder.new()
-
-
-
 
 #1. Create objects in the game
 #------------------------- 1.1. Map Section --------------------------------
@@ -34,6 +29,15 @@ monsters = [Bat.new(38*CP::TILE_SIZE, 38*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_
             # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
            ]
         
+npcs = [Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3, CP::TILE_SIZE, CP::TILE_SIZE)
+        
+       ]
+insideChest = Meat.new
+items = [Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 5, insideChest)
+
+          ]
+
+
 #------------------------- 1.4. Text Section --------------------------------
 text = Text.new(
   '',
@@ -46,14 +50,6 @@ text = Text.new(
   #z: 10
 )
 
-firstNPC = Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3,
-CP::TILE_SIZE, CP::TILE_SIZE)
-insideChest = Meat.new
-newchest = Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 5,insideChest)
-
-#1.1
-pFinder = PathFinder.new()
-=======
 text1 = Text.new(
   '',
   x: 450, y: 0,
@@ -82,25 +78,28 @@ music.play
 #------------------------------------------------------- Game Loop ------------------------------------------
 update do
     #1. Update Player
-    player.updatePlayer(monsters, map, firstNPC, newchest)
+    player.updatePlayer(monsters, map, npcs, items)
 
     #2. Update all Monsters
     for i in 0..(monsters.length - 1)
-      monsters[i].updateMonster(player, map, pFinder)
+      monsters[i].updateMonster(player, map, pFinder, items)
     end
 
     #3. Update Texts
-    text.text = "Coordinate: #{player.worldX}  #{player.worldY} \n"
-
-    # Update npc
-    firstNPC.updateNPC(player, map)
-
-    newchest.updateChest(player)
     text.text = "Coordinate: #{player.worldX}  #{player.worldY} "
     text1.text = "Coordinate Monster: #{monsters[0].worldX}    #{monsters[0].worldY}"
+
+    #4. Update npc
+    for i in 0..(npcs.length - 1)
+      npcs[i].updateNPC(player, map)
+    end
+
+    #5. Update object in map
+    for i in 0..(items.length - 1)
+      items[i].updateChest(player)
+    end
     
-    
-    #4. Update Map
+    #5d. Update Map
     map.updateMap(player, pFinder)
 
 end

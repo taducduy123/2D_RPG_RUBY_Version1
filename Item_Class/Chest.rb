@@ -53,7 +53,7 @@ class Chest
     WorldHandler::DrawObject(self, player)
     if CCHECK.checkEntity_Collide_SingleTarget(player, self) == true
       PlayerInteract(player)
-      put "hi"
+      # put "hi"
     end
   end
 

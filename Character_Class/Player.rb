@@ -91,7 +91,7 @@ class Player < Sprite
 
 
 #-------------------------------- Update -----------------------------------------
-  def updatePlayer(monsters, map, npc, chests)
+  def updatePlayer(monsters, map, npcs, objects)
 
 
     @collisionOn = false
@@ -100,13 +100,21 @@ class Player < Sprite
 
     #2. Check if player collides any monster
     monsterIndex = CCHECK.checkEntity_Collide_AllTargets(self, monsters)
-
     if(monsterIndex != -1)
       puts 'You are hitting a monster'
     end
-    CCHECK.checkEntity_Collide_SingleTarget(self, npc)
-    CCHECK.checkEntity_Collide_SingleTarget(self, chests)
 
+    #3. Check if player collides any NPC
+    for i in 0..(npcs.length - 1)
+      CCHECK.checkEntity_Collide_SingleTarget(self, npcs[i])
+    end
+
+    #4. Check if player collides any object in the map
+    for i in 0..(objects.length - 1)
+      CCHECK.checkEntity_Collide_SingleTarget(self, objects[i])
+    end
+
+    #Move
     self.move()
 
   end

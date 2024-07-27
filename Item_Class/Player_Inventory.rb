@@ -28,7 +28,8 @@ class Inventory
         rect = Rectangle.new(
           x: x * TILE_SIZE + Window.width / 3, y: y * TILE_SIZE + Window.height / 4,
           width: TILE_SIZE - 2, height: TILE_SIZE - 2,
-          color: 'black'
+          color: 'black',
+          z: 3
         )
         @created_objects << rect
 
@@ -36,7 +37,8 @@ class Inventory
           img = Image.new(
             @my_inventory[y][x].image_path,
             x: x * TILE_SIZE + Window.width / 3, y: y * TILE_SIZE + Window.height / 4,
-            width: TILE_SIZE - 2, height: TILE_SIZE - 2
+            width: TILE_SIZE - 2, height: TILE_SIZE - 2,
+            z: 4
           )
           @created_objects << img
         end
@@ -47,7 +49,8 @@ class Inventory
     @cursor = Image.new(
       'Image/cursor.png',
       x: @cursor_x * TILE_SIZE + Window.width / 3, y: @cursor_y * TILE_SIZE + Window.height / 4,
-      width: TILE_SIZE - 2, height: TILE_SIZE - 2
+      width: TILE_SIZE - 2, height: TILE_SIZE - 2,
+      z: 5
     )
   end
 

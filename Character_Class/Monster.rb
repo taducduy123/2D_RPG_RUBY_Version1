@@ -87,15 +87,19 @@ class Monster < Sprite
 
 
   #
-  def checkCollision(player, map)
+  def checkCollision(player, map, items)
     #1. Check if monster collides wall
     CCHECK.checkTile(self, map)
     #2. Check if monster collides Player
     CCHECK.checkEntity_Collide_SingleTarget(self, player)
+    #3. Check if monster collides Item in the map
+    for i in 0..(items.length - 1)
+      CCHECK.checkEntity_Collide_SingleTarget(self, items[i])
+    end
   end
 
 #------------------------------ Random Move ---------------------------------------------------
-  def randMove(player, map)
+  def randMove(player, map, items)
 
     @moveCounter = @moveCounter + 1
     #puts "#{@moveCounter} \n"
@@ -119,7 +123,7 @@ class Monster < Sprite
 
       # Checking collision before moving
       @collisionOn = false
-      self.checkCollision(player, map)
+      self.checkCollision(player, map, items)
 
       if(@collisionOn == false)
         if(self.upDirection == true)
@@ -138,7 +142,7 @@ class Monster < Sprite
 
 
   #
-  def moveForwardTo(goalRow, goalCol, player, map, pFinder)
+  def moveForwardTo(goalRow, goalCol, player, map, pFinder, items)
 
     @upDirection = false
     @downDirection = false
@@ -146,7 +150,7 @@ class Monster < Sprite
     @rightDirection = false
 
     #Search path
-    self.searchPath(goalRow, goalCol, player, map, pFinder)
+    self.searchPath(goalRow, goalCol, player, map, pFinder, items)
     #puts "#{@onPath} \n"
     #if path found
     if(@onPath == true)  
@@ -155,7 +159,7 @@ class Monster < Sprite
       puts "MOVINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG + #{@counter}\n"
       # Checking collision before moving
       @collisionOn = false
-      self.checkCollision(player, map)
+      self.checkCollision(player, map, items)
 
       if(@collisionOn == false)
         if(self.upDirection == true)
@@ -177,7 +181,7 @@ class Monster < Sprite
 
 
   #
-  def searchPath(goalRow, goalCol, player, map, pFinder)
+  def searchPath(goalRow, goalCol, player, map, pFinder, items)
     startRow = (@worldY + @solidArea.y) / CP::TILE_SIZE
     startCol = (@worldX + @solidArea.x) / CP::TILE_SIZE
 
@@ -212,7 +216,7 @@ class Monster < Sprite
       elsif(enTopY > nextY && enLeftX > nextX)
         # should go up or go left ?
         @upDirection = true                     # <<<<<<------------------------------------------- carefull
-        self.checkCollision(player, map)
+        self.checkCollision(player, map, items)
         if(@collisionOn == true)
           @leftDirection = true
           @upDirection = false
@@ -220,7 +224,7 @@ class Monster < Sprite
       elsif(enTopY > nextY && enLeftX < nextX)
         # should go up or go right ?
         @upDirection = true                     # <<<<<<------------------------------------------- carefull
-        self.checkCollision(player, map)
+        self.checkCollision(player, map, items)
         if(@collisionOn == true)
           @rightDirection = true
           @upDirection = false
@@ -228,7 +232,7 @@ class Monster < Sprite
       elsif(enTopY < nextY && enLeftX > nextX)
         # should go down or go left ?
         @downDirection = true                   # <<<<<<------------------------------------------- carefull
-        self.checkCollision(player, map)
+        self.checkCollision(player, map, items)
         if(@collisionOn == true)
           @leftDirection = true
           @downDirection = false
@@ -236,7 +240,7 @@ class Monster < Sprite
       elsif(enTopY < nextY && enLeftX < nextX)
         # should go down or go right ?
         @downDirection = true                   # <<<<<<------------------------------------------- carefull
-        self.checkCollision(player, map)
+        self.checkCollision(player, map, items)
         if(@collisionOn == true)
           @rightDirection = true
           @downDirection = false
