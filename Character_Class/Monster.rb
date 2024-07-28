@@ -57,16 +57,15 @@ class Monster < Sprite
 
     #8. Tool for finding the shortest path
     @pFinder = PathFinder.new()
-    @showPathOn = false
+    @showPathOn = false       #This is usefull for debuging. If you don't want show the shortest path, turn @showPathOn = false. Otherwise, true
     @path = []
-
-    #This will be convenient for random move function
-    @moveCounter = 0
 
     #This is used to find the shortest path 
     #(if you want stop monster pursue you, let change @onPath = false)
     @onPath = false
 
+    #This will be convenient for random move function
+    @moveCounter = 0
   end
 
 
@@ -347,17 +346,16 @@ class Monster < Sprite
             end
         end  
     end
-
   end
 
 
   def resetPath
-
-    for i in 0..(@path.length - 1)
-      path[i].remove
+    if(@showPathOn == true)
+      for i in 0..(@path.length - 1)
+        path[i].remove
+      end
+      @path.clear
     end
-    @path.clear
-
   end
 
 

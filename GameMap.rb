@@ -39,11 +39,6 @@ class GameMap
         # Create a 2D array with all elements initialized to nil
         @tileSet = Array.new(CP::MAX_WORLD_ROWS) {Array.new(CP::MAX_WORLD_COLS, nil)}
 
-        
-        # @showPathOn = false
-        # @path = []
-
-
         #showMap
         self.showMap()
     end
