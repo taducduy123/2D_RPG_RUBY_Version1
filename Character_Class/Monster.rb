@@ -86,7 +86,7 @@ class Monster < Sprite
       @image.y = screenY
       @image.add
     else
-      @image.add
+      @image.remove
     end
   end
 
@@ -132,7 +132,7 @@ class Monster < Sprite
 
 
   #
-  def checkCollision(player, map, items, npcs)
+  def checkCollision(player, map, items, npcs, monsters)
     @collisionOn = false
 
     #1. Check if monster collides any wall
@@ -150,14 +150,17 @@ class Monster < Sprite
     for i in 0..(npcs.length - 1)
       CCHECK.checkEntity_Collide_SingleTarget(self, npcs[i])
     end
+
+    #5. Check if monster collides any other monsters
+    CCHECK.checkMonster_Collide_OtherMonsters(self, monsters)
   end
 
 #------------------------------ Random Move ---------------------------------------------------
-  def randMove(player, map, items, npcs)
+  def randMove(player, map, items, npcs, monsters)
 
     @moveCounter = @moveCounter + 1
-    #puts "#{@moveCounter} \n"
-    if(@moveCounter == 20)
+    # generate a random number after every 120 steps
+    if(@moveCounter == 120)
       @upDirection = false
       @downDirection = false
       @leftDirection = false
@@ -173,42 +176,43 @@ class Monster < Sprite
       else
         @rightDirection = true
       end
-
-      # Checking collision before moving
-      self.checkCollision(player, map, items, npcs)
-
-      # If no collison is detected, then move monster
-      if(@collisionOn == false)
-        if(self.upDirection == true)
-          @worldY -= @speed
-        elsif(self.downDirection == true)
-          @worldY += @speed
-        elsif(self.leftDirection == true)
-          @worldX -= @speed
-        elsif(self.rightDirection == true)
-          @worldX += @speed
-        end
-      end
     @moveCounter = 0 #reset moveCounter
+    end
+
+    
+    # Checking collision before moving
+    self.checkCollision(player, map, items, npcs, monsters)
+
+    # If no collison is detected, then move monster
+    if(@collisionOn == false)
+      if(self.upDirection == true)
+        @worldY -= @speed
+      elsif(self.downDirection == true)
+        @worldY += @speed
+      elsif(self.leftDirection == true)
+        @worldX -= @speed
+      elsif(self.rightDirection == true)
+        @worldX += @speed
+      end
     end
   end
 
 
 #--------------------------------------- Target Move -----------------------------------------
-  def moveForwardTo(goalRow, goalCol, player, map, pFinder, items, npcs)
+  def moveForwardTo(goalRow, goalCol, player, map, pFinder, items, npcs, monsters)
     @upDirection = false
     @downDirection = false
     @leftDirection = false
     @rightDirection = false
 
     #Search path
-    self.searchPath(goalRow, goalCol, player, map, pFinder, items, npcs)
+    self.searchPath(goalRow, goalCol, player, map, pFinder, items, npcs, monsters)
     
     #if path found
     if(@onPath == true)  
 
       # Checking collision before moving
-      self.checkCollision(player, map, items, npcs)
+      self.checkCollision(player, map, items, npcs, monsters)
 
       # If no collision is detected, then move the monster
       if(@collisionOn == false)
@@ -229,7 +233,7 @@ class Monster < Sprite
 #---------------------------- Let monster follow the selected shortest path -----------------------------
 # This function changes @onPath = true whenever there exists a path. Also, this function navigate the
 # monster so that the monster follows the found path.
-  def searchPath(goalRow, goalCol, player, map, pFinder, items, npcs)
+  def searchPath(goalRow, goalCol, player, map, pFinder, items, npcs, monsters)
     startRow = (@worldY + @solidArea.y) / CP::TILE_SIZE
     startCol = (@worldX + @solidArea.x) / CP::TILE_SIZE
 
@@ -265,7 +269,7 @@ class Monster < Sprite
       elsif(enTopY > nextY && enLeftX > nextX)
         # should go up or go left ?
         @upDirection = true                     # <<<<<<------------------------------------------- carefull
-        self.checkCollision(player, map, items, npcs)
+        self.checkCollision(player, map, items, npcs, monsters)
         if(@collisionOn == true)
           @leftDirection = true
           @upDirection = false
@@ -273,7 +277,7 @@ class Monster < Sprite
       elsif(enTopY > nextY && enLeftX < nextX)
         # should go up or go right ?
         @upDirection = true                     # <<<<<<------------------------------------------- carefull
-        self.checkCollision(player, map, items, npcs)
+        self.checkCollision(player, map, items, npcs, monsters)
         if(@collisionOn == true)
           @rightDirection = true
           @upDirection = false
@@ -281,7 +285,7 @@ class Monster < Sprite
       elsif(enTopY < nextY && enLeftX > nextX)
         # should go down or go left ?
         @downDirection = true                   # <<<<<<------------------------------------------- carefull
-        self.checkCollision(player, map, items, npcs)
+        self.checkCollision(player, map, items, npcs, monsters)
         if(@collisionOn == true)
           @leftDirection = true
           @downDirection = false
@@ -289,7 +293,7 @@ class Monster < Sprite
       elsif(enTopY < nextY && enLeftX < nextX)
         # should go down or go right ?
         @downDirection = true                   # <<<<<<------------------------------------------- carefull
-        self.checkCollision(player, map, items, npcs)
+        self.checkCollision(player, map, items, npcs, monsters)
         if(@collisionOn == true)
           @rightDirection = true
           @downDirection = false
