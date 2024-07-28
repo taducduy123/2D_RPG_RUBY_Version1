@@ -89,7 +89,6 @@ class Skeleton < Monster
       self.DrawHealthBar(player)
 
       self.resetPath
-      #self.randMove(player, map, items, npcs, monsters)
       self.moveForwardTo((player.worldY + player.solidArea.y) / CP::TILE_SIZE, (player.worldX + player.solidArea.x) / CP::TILE_SIZE,
                           player, map, items, npcs, monsters)
       self.showPath(player)
