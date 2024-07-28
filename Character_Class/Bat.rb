@@ -31,7 +31,7 @@ class Bat < Monster
 
 
 #-------------------------------- Override Methods -----------------------------------------
-  def updateMonster(player, map, pFinder, items, npcs, monsters)  
+  def updateMonster(player, map, items, npcs, monsters)  
     if(@exist == true)
       self.DrawMonster(player)
       self.DrawHealthBar(player)

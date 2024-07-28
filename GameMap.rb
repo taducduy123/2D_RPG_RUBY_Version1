@@ -39,18 +39,9 @@ class GameMap
         # Create a 2D array with all elements initialized to nil
         @tileSet = Array.new(CP::MAX_WORLD_ROWS) {Array.new(CP::MAX_WORLD_COLS, nil)}
 
-        #
+        
         # @showPathOn = false
-        # @path = Array.new(CP::MAX_WORLD_ROWS) {Array.new(CP::MAX_WORLD_COLS, nil)}
-        # for i in 0..(CP::MAX_WORLD_ROWS - 1)
-        #     for j in 0..(CP::MAX_WORLD_COLS - 1)
-        #         @path[i][j] = Rectangle.new(x: j * CP::TILE_SIZE, y: i * CP::TILE_SIZE,
-        #                                     width: CP::TILE_SIZE, height: CP::TILE_SIZE,
-        #                                     color: 'red',
-        #                                     opacity: 0.5)
-        #         @path[i][j].remove
-        #     end
-        # end
+        # @path = []
 
 
         #showMap
@@ -116,54 +107,13 @@ class GameMap
         end
     end
 
-    
-    # #
-    # def showPath(player, pFinder)
-
-    #     for i in 0..CP::MAX_WORLD_ROWS-1
-    #         for j in 0..CP::MAX_WORLD_COLS-1
-    #             worldX = j * CP::TILE_SIZE
-    #             worldY = i * CP::TILE_SIZE
-    #             screenX = worldX - player.worldX + player.x
-    #             screenY = worldY - player.worldY + player.y
-
-    #             @path[i][j].x = screenX
-    #             @path[i][j].y = screenY
-    #             @path[i][j].remove
-    #         end
-    #     end
-
-    #     for i in 0..(pFinder.pathList.length - 1)
-    #         @path[pFinder.pathList[i].row][pFinder.pathList[i].col].add
-    #     end
-
-    # end
-
-
 
     #
-    def updateMap(player, pFinder)
+    def updateMap(player)
         self.camera(player)
-        # if(@showPathOn == true)
-        #     self.showPath(player, pFinder)
-        # end
     end
 end
 
 
 
 
-
-# #Testing
-# map = GameMap.new()
-# #------------------------------------------------------- Set up window ---------------------------------------
-# #Setting Window
-# set width: CP::SCREEN_HEIGHT
-# set height: CP::SCREEN_WIDTH
-# set title: "20x20 Grid RPG"
-# set resizable: true
-# #set fullscreen: true
-
-
-# #------------------------------------------------------- Show window ---------------------------------------
-# show
