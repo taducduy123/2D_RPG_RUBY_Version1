@@ -14,7 +14,8 @@ include WorldHandler
 class NPC < Sprite
   attr_reader :x, :y, :speed, :worldX, :worldY, :moveCounter
   attr_accessor :upDirection, :downDirection, :leftDirection,
-  :rightDirection, :solidArea, :collisionOn, :image, :onPath
+  :rightDirection, :solidArea, :collisionOn, :image, :onPath,
+  :chatprogress
 
   def initialize(worldX, worldY, width, height)
 
@@ -27,6 +28,9 @@ class NPC < Sprite
     @leftDirection = false
     @rightDirection = false
 
+    @interactRange = InteractRange.new(worldX,worldY)
+
+
     #World Coordinate
     @worldX = worldX
     @worldY = worldY
@@ -38,19 +42,23 @@ class NPC < Sprite
     @collisionOn = false
   end
 
-  def updateNPC(player, map)
+  def updateNPC(player, map, npcId)
     WorldHandler::DrawObject(self, player)
-    checkCollision(player,map)
+    checkCollision(player,map, npcId)
   end
 
-  def checkCollision(player, map)
+  def checkCollision(player, map, npcId)
     CCHECK.checkTile(self, map)
-    if CCHECK.checkEntity_Collide_SingleTarget(player, self) == true
-      startDialogue
+    if CCHECK.checkEntity_Collide_SingleTarget(player, @interactRange) == true
+      player.talktoNpc = npcId
+    else
+      player.talktoNpc = -1
     end
+    startDialogue(player)
+
   end
 
-  def startDialogue
+  def startDialogue(with)
      # chat override
   end
 
