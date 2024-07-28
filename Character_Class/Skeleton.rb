@@ -28,17 +28,23 @@ class Skeleton < Monster
 
     # Speed
     @speed = 1
+
+    #show path?
+    @showPathOn = true
   end
 
 
 #-------------------------------- Override Methods -----------------------------------------
-  def updateMonster(player, map, pFinder, items, npcs, monsters)  
+  def updateMonster(player, map, items, npcs, monsters)  
     if(@exist == true)
       self.DrawMonster(player)
       self.DrawHealthBar(player)
+
+      self.resetPath
       #self.randMove(player, map, items, npcs, monsters)
       self.moveForwardTo((player.worldY + player.solidArea.y) / CP::TILE_SIZE, (player.worldX + player.solidArea.x) / CP::TILE_SIZE, 
-                          player, map, pFinder, items, npcs, monsters)
+                          player, map, items, npcs, monsters)
+      self.showPath(player)
     else
       self.removeMonster
     end

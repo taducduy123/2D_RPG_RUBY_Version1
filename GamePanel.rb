@@ -73,9 +73,7 @@ text1 = Text.new(
 #2. Include necessary tools
 #------------------------------------ 2.1. Get user's input -------------------------
 get_key_input(player, items, npcs)
-#------------------------------------ 2.2. Finding Path -----------------------------
-pFinder = PathFinder.new()
-#------------------------------------ 2.3. Audio/Sound ------------------------------
+#------------------------------------ 2.2. Audio/Sound ------------------------------
 music = Music.new('Sound/Dungeon.wav')
 music.loop = true
 music.play
@@ -90,7 +88,7 @@ update do
 
     #2. Update Monsters
     for i in 0..(monsters.length - 1)
-      monsters[i].updateMonster(player, map, pFinder, items, npcs, monsters)
+      monsters[i].updateMonster(player, map, items, npcs, monsters)
     end
 
     #3. Update Texts
@@ -107,8 +105,8 @@ update do
       items[i].updateChest(player, i)
     end
 
-    #5d. Update Map
-    map.updateMap(player, pFinder)
+    #6. Update Map
+    map.updateMap(player)
 
 end
 

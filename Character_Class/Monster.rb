@@ -55,6 +55,10 @@ class Monster < Sprite
     #7. Existence of monster 
     @exist = true
 
+    #8. Tool for finding the shortest path
+    @pFinder = PathFinder.new()
+    @showPathOn = false
+    @path = []
 
     #This will be convenient for random move function
     @moveCounter = 0
@@ -199,14 +203,14 @@ class Monster < Sprite
 
 
 #--------------------------------------- Target Move -----------------------------------------
-  def moveForwardTo(goalRow, goalCol, player, map, pFinder, items, npcs, monsters)
+  def moveForwardTo(goalRow, goalCol, player, map, items, npcs, monsters)
     @upDirection = false
     @downDirection = false
     @leftDirection = false
     @rightDirection = false
 
     #Search path
-    self.searchPath(goalRow, goalCol, player, map, pFinder, items, npcs, monsters)
+    self.searchPath(goalRow, goalCol, player, map, items, npcs, monsters)
     
     #if path found
     if(@onPath == true)  
@@ -233,19 +237,19 @@ class Monster < Sprite
 #---------------------------- Let monster follow the selected shortest path -----------------------------
 # This function changes @onPath = true whenever there exists a path. Also, this function navigate the
 # monster so that the monster follows the found path.
-  def searchPath(goalRow, goalCol, player, map, pFinder, items, npcs, monsters)
+  def searchPath(goalRow, goalCol, player, map, items, npcs, monsters)
     startRow = (@worldY + @solidArea.y) / CP::TILE_SIZE
     startCol = (@worldX + @solidArea.x) / CP::TILE_SIZE
 
     # Convert data of map into data of graph
-    pFinder.setNodes(startRow, startCol, goalRow, goalCol, map)
+    @pFinder.setNodes(startRow, startCol, goalRow, goalCol, map)
 
-    if (pFinder.search() == true)       # if found path
+    if (@pFinder.search() == true)       # if found path
       @onPath = true
 
       # next worldX and worldY
-      nextX = pFinder.pathList[0].col * CP::TILE_SIZE
-      nextY = pFinder.pathList[0].row * CP::TILE_SIZE
+      nextX = @pFinder.pathList[0].col * CP::TILE_SIZE
+      nextY = @pFinder.pathList[0].row * CP::TILE_SIZE
 
       # Entity's solid area
       enLeftX   = @worldX + @solidArea.x
@@ -301,14 +305,60 @@ class Monster < Sprite
       end
 
       # #Stop when catching the goal
-      # nextRow = pFinder.pathList[0].row
-      # nextCol = pFinder.pathList[0].col
+      # nextRow = @pFinder.pathList[0].row
+      # nextCol = @pFinder.pathList[0].col
       # if(nextRow == goalRow && nextCol == goalCol)
       #   @onPath = false
       # end
     end
   end
 
+
+  def showPath(player)
+    if (@showPathOn == true)
+        for i in 0..(@pFinder.pathList.length - 1)
+
+            # World Coordinate of path[i]
+            worldX = @pFinder.pathList[i].col * CP::TILE_SIZE
+            worldY = @pFinder.pathList[i].row * CP::TILE_SIZE
+
+            # Screen Coordinate of path[i] should be
+            screenX = worldX - player.worldX + player.x
+            screenY = worldY - player.worldY + player.y
+
+            #World Coordinate of Camera
+            cameraWorldX = player.worldX - player.x
+            cameraWorldY = player.worldY - player.y
+
+            # Rendering game by removing unnessary images (we keep images in camera's scope, and remove otherwise)
+            if(CCHECK.intersect(cameraWorldX, cameraWorldY, CP::SCREEN_WIDTH, CP::SCREEN_HEIGHT,
+                                worldX, worldY, CP::TILE_SIZE, CP::TILE_SIZE) == true)  #Notice we want the dimension of camera is exactly same as our window
+                if(@path != nil)
+                  @path.push(Rectangle.new(x: screenX, 
+                                         y: screenY, 
+                                         width: CP::TILE_SIZE, 
+                                         height: CP::TILE_SIZE,
+                                         color: 'red',
+                                         z: -1,
+                                         opacity: 0.5
+                                         )
+                            )
+                end
+            end
+        end  
+    end
+
+  end
+
+
+  def resetPath
+
+    for i in 0..(@path.length - 1)
+      path[i].remove
+    end
+    @path.clear
+
+  end
 
 
 end
