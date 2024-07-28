@@ -12,13 +12,13 @@ include CCHECK
 class Monster < Sprite
   attr_reader :x, :y,
               :worldX, :worldY,
-              :speed, 
+              :speed,
               :moveCounter
 
-  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, 
-                :solidArea, 
-                :collisionOn, 
-                :image, 
+  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection,
+                :solidArea,
+                :collisionOn,
+                :image,
                 :onPath,
                 :exist
 
@@ -52,14 +52,14 @@ class Monster < Sprite
     )
     @collisionOn = false
 
-    #7. Existence of monster 
+    #7. Existence of monster
     @exist = true
 
 
     #This will be convenient for random move function
     @moveCounter = 0
 
-    #This is used to find the shortest path 
+    #This is used to find the shortest path
     #(if you want stop monster pursue you, let change @onPath = false)
     @onPath = false
 
@@ -93,20 +93,20 @@ class Monster < Sprite
   #
   def DrawHealthBar(player)
     # Screen Coordinate of Health Bar should be
-    screenX = @worldX - player.worldX + player.x 
+    screenX = @worldX - player.worldX + player.x
     screenY = @worldY - player.worldY + player.y - (2/3 * CP::TILE_SIZE)
 
     #World Coordinate of Camera
     cameraWorldX = player.worldX - player.x
     cameraWorldY = player.worldY - player.y
-    
+
     # Rendering game by removing unnessary images (we keep images in camera's scope, and remove otherwise)
     if(CCHECK.intersect(cameraWorldX, cameraWorldY, CP::SCREEN_WIDTH, CP::SCREEN_HEIGHT,
                         worldX, worldY, CP::TILE_SIZE, CP::TILE_SIZE) == true)  #Notice we want the dimension of camera is exactly same as our window
         @healthBar.heart.x = screenX - 15
         @healthBar.heart.y = screenY
-        @healthBar.rec1.x =  screenX 
-        @healthBar.rec1.y =  screenY 
+        @healthBar.rec1.x =  screenX
+        @healthBar.rec1.y =  screenY
         @healthBar.rec2.x =  @healthBar.rec1.x + 2
         @healthBar.rec2.y =  @healthBar.rec1.y + 2
 
@@ -179,7 +179,7 @@ class Monster < Sprite
     @moveCounter = 0 #reset moveCounter
     end
 
-    
+
     # Checking collision before moving
     self.checkCollision(player, map, items, npcs, monsters)
 
@@ -207,9 +207,9 @@ class Monster < Sprite
 
     #Search path
     self.searchPath(goalRow, goalCol, player, map, pFinder, items, npcs, monsters)
-    
+
     #if path found
-    if(@onPath == true)  
+    if(@onPath == true)
 
       # Checking collision before moving
       self.checkCollision(player, map, items, npcs, monsters)
@@ -218,11 +218,15 @@ class Monster < Sprite
       if(@collisionOn == false)
         if(self.upDirection == true)
           @worldY -= @speed
+          self.runAnimation
         elsif(self.downDirection == true)
-          @worldY += @speed  
+          self.runAnimationLeft
+          @worldY += @speed
         elsif(self.leftDirection == true)
+          self.runAnimationLeft
           @worldX -= @speed
         elsif(self.rightDirection == true)
+          self.runAnimation
           @worldX += @speed
         end
       end

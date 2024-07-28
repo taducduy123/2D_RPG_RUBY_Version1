@@ -42,7 +42,7 @@ class Chest
       opacity: 0
     )
      @collisionOn = false
-     @activemess = ChatBubble.new( 0, Window.height - Window.height / 6,
+     @activemess = ChatBubble.new( 0, Window.height - Window.height / 11,
      Window.width ,Window.height / 5,"Press E to open")
      @activemess.hide
   end
