@@ -59,12 +59,16 @@ class GameMap
                 case @tileManager[i][j]
                     when  0
                         @tileSet[i][j] = Wall.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
+                        #@tileSet[i][j].image.remove
                     when  1
                         @tileSet[i][j] = Grass.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
+                        #@tileSet[i][j].image.remove
                     when  2
                         @tileSet[i][j] = Water.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
+                        #@tileSet[i][j].image.remove
                     when  3
                         @tileSet[i][j] = Fire.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
+                        #@tileSet[i][j].image.remove
                 end
             end
         end
@@ -75,34 +79,28 @@ class GameMap
     def camera(player)
         for i in 0..CP::MAX_WORLD_ROWS-1
             for j in 0..CP::MAX_WORLD_COLS-1
+
+                # World Coordinate of tile[i][j]
                 worldX = j * CP::TILE_SIZE
                 worldY = i * CP::TILE_SIZE
+
+                # Screen Coordinate of tile[i][j] should be
                 screenX = worldX - player.worldX + player.x
                 screenY = worldY - player.worldY + player.y
 
-                # #World Coordinate of Camera
-                # cameraX = player.worldX - player.x
-                # cameraY = player.worldY - player.y
+                #World Coordinate of Camera
+                cameraWorldX = player.worldX - player.x
+                cameraWorldY = player.worldY - player.y
                 
-                
-                # if(CCHECK.intersect(worldX, worldY, CP::TILE_SIZE, CP::TILE_SIZE, 
-                #                     cameraX, cameraY, CP::SCREEN_WIDTH, CP::SCREEN_HEIGHT) == true)  #Notice we want the dimension of camera is exactly same as our window
-                #      @tileSet[i][j].image.x = screenX
-                #      @tileSet[i][j].image.y = screenY
-
-                #       puts "#{i}  #{j}  \n"
-                # end
-
-                # if ( worldX + 1*CP::TILE_SIZE > player.worldX - player.x &&
-                #      worldX - 1*CP::TILE_SIZE < player.worldX + player.x &&
-                #      worldY + 1*CP::TILE_SIZE > player.worldY - player.y &&
-                #      worldY - 1*CP::TILE_SIZE < player.worldY + player.y)
-
-                     @tileSet[i][j].image.x = screenX
-                     @tileSet[i][j].image.y = screenY 
-                  
-                #      puts "#{i}  #{j}  \n"
-                # end
+                # Rendering game by removing unnessary images (we keep images in camera's scope, and remove otherwise)
+                if(CCHECK.intersect(cameraWorldX, cameraWorldY, CP::SCREEN_WIDTH, CP::SCREEN_HEIGHT,
+                                    worldX, worldY, CP::TILE_SIZE, CP::TILE_SIZE) == true)  #Notice we want the dimension of camera is exactly same as our window
+                    @tileSet[i][j].image.x = screenX
+                    @tileSet[i][j].image.y = screenY
+                    @tileSet[i][j].image.add
+                else
+                    @tileSet[i][j].image.remove
+                end
             end
         end
     end

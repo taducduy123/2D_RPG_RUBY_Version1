@@ -99,7 +99,7 @@ class Monster < Sprite
     @image.y = -20 * CP::TILE_SIZE
     @wordlX = -20 * CP::TILE_SIZE
     @wordlY = -20 * CP::TILE_SIZE
-
+    @image.remove
   end
 
 

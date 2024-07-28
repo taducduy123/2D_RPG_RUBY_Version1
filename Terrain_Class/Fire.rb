@@ -16,6 +16,8 @@ class Fire
       loop: true,
       time: 200
     )
+    @image.z = -1
+
     @isSolid = false
     self.runAnimation
   end

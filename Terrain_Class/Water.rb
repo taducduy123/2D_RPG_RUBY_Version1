@@ -8,7 +8,8 @@ class Water
      x: x,
      y: y,
      width: width,
-     height: height
+     height: height,
+     z: -1
      )
      @isSolid = false
   end

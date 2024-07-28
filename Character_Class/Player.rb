@@ -34,6 +34,7 @@ class Player < Sprite
       'Image/Warrior_Red.png',
       x: CP::SCREEN_WIDTH / 2 - (CP::TILE_SIZE/2),
       y: CP::SCREEN_HEIGHT / 2 - (CP::TILE_SIZE/2),
+      z: 20,                                                            #Precedence of show
       width: width, height: height,
       clip_x: @first_frame[:x], clip_y: @first_frame[:y],
       clip_width: @first_frame[:width], clip_height: @first_frame[:height],
