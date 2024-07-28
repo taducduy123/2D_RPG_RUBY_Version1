@@ -31,13 +31,13 @@ class Bat < Monster
 
 
 #-------------------------------- Override Methods -----------------------------------------
-  def updateMonster(player, map, pFinder, items, npcs)  
+  def updateMonster(player, map, pFinder, items, npcs, monsters)  
     if(@exist == true)
       self.DrawMonster(player)
       self.DrawHealthBar(player)
-      #self.randMove(player, map, items, npcs)
-      self.moveForwardTo((player.worldY + player.solidArea.y) / CP::TILE_SIZE, (player.worldX + player.solidArea.x) / CP::TILE_SIZE, 
-                          player, map, pFinder, items, npcs)
+      self.randMove(player, map, items, npcs, monsters)
+      # self.moveForwardTo((player.worldY + player.solidArea.y) / CP::TILE_SIZE, (player.worldX + player.solidArea.x) / CP::TILE_SIZE, 
+      #                     player, map, pFinder, items, npcs, monsters)
     else
       self.removeMonster
     end

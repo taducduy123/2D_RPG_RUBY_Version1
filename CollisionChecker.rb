@@ -94,7 +94,7 @@ module CCHECK
     entitySolidX = entity.worldX + entity.solidArea.x
     entitySolidY = entity.worldY + entity.solidArea.y
 
-    ##Get target's solid area Wolrd Position
+    #Get target's solid area Wolrd Position
     targetSolidX = target.worldX + target.solidArea.x
     targetSolidY = target.worldY + target.solidArea.y
 
@@ -165,5 +165,22 @@ module CCHECK
     end
     return index
   end
+
+
+
+#---------------------------- Check if one monster collides any other monster in the monster list-----------------------------------------
+#Ex: Given monsterList = {M1, M2, M3, M4}. This function will check if M_i collides any other monsters that are not M_i in the list  
+  def checkMonster_Collide_OtherMonsters(monster, monsterList)
+    for i in 0..(monsterList.length - 1)
+      if(monster != monsterList[i])
+        checkEntity_Collide_SingleTarget(monster, monsterList[i])
+      end
+      if (monster.collisionOn == true)
+        return true
+      end
+    end
+    return false
+  end
+
 
 end

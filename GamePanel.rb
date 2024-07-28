@@ -25,8 +25,8 @@ player = Player.new(1*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SI
 
 #------------------------- 1.3. Monsters Section --------------------------------
 monsters = [
-            Bat.new(4*CP::TILE_SIZE, 4*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
-            # Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
+            Bat.new(16*CP::TILE_SIZE, 0*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player),
+            Bat.new(16*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
             # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
            ]
 
@@ -36,7 +36,7 @@ npcs = [
 
        ]
 
-#------------------------- 1.4. Items Section --------------------------------
+#------------------------- 1.5. Items Section --------------------------------
 insideChest = Meat.new
 items = [
           Chest.new(CP::TILE_SIZE * 6, CP::TILE_SIZE * 4, insideChest)
@@ -44,7 +44,7 @@ items = [
         ]
 
 
-#------------------------- 1.5. Text Section --------------------------------
+#------------------------- 1.6. Text Section --------------------------------
 text = Text.new(
   '',
   x: 0, y: 0,
@@ -88,7 +88,7 @@ update do
 
     #2. Update Monsters
     for i in 0..(monsters.length - 1)
-      monsters[i].updateMonster(player, map, pFinder, items, npcs)
+      monsters[i].updateMonster(player, map, pFinder, items, npcs, monsters)
     end
 
     #3. Update Texts
