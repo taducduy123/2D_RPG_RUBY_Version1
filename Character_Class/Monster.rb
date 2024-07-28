@@ -57,7 +57,7 @@ class Monster < Sprite
 
     #8. Tool for finding the shortest path
     @pFinder = PathFinder.new()
-    @showPathOn = false       #This is usefull for debuging. If you don't want show the shortest path, turn @showPathOn = false. Otherwise, true
+    @showPathOn = true       #This is usefull for debuging. If you don't want show the shortest path, turn @showPathOn = false. Otherwise, true
     @path = []
 
     #This is used to find the shortest path
@@ -97,7 +97,7 @@ class Monster < Sprite
   def DrawHealthBar(player)
     # Screen Coordinate of Health Bar should be
     screenX = @worldX - player.worldX + player.x
-    screenY = @worldY - player.worldY + player.y - (2/3 * CP::TILE_SIZE)
+    screenY = @worldY - player.worldY + player.y - (2/3* CP::TILE_SIZE + 9)
 
     #World Coordinate of Camera
     cameraWorldX = player.worldX - player.x

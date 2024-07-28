@@ -72,7 +72,7 @@ class Skeleton < Monster
     @speed = 1
 
     #show path?
-    @showPathOn = true
+    #@showPathOn = 
   end
   def runAnimation
     @image.play animation: :walk, loop: true
