@@ -51,14 +51,14 @@ class Chest
 
     @image.play animation: :open
     if !(@isEmpty)
-      # if player.myInventory.IsFull
-      #   @activemess.set_text("Your inventory is full!")
-      # else
-        puts "item ad"
+      if player.myInventory.IsFull
+        @activemess.set_text("Your inventory is full!")
+      else
+        #puts "item ad"
         player.myInventory.add_to_inventory(@Inside_The_Chest)
         @activemess.set_text("Item added to your inventory")
         removeItem
-      # end
+      end
     else
        @activemess.set_text ("Chest is emty")
     end
@@ -71,6 +71,7 @@ class Chest
         player.interacting = chestId
       else
         @activemess.hide
+        @activemess.set_text("Press e to open")
         player.interacting = -1
       end
 

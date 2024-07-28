@@ -19,12 +19,14 @@ class Warrior < NPC
       clip_height: height_Of('Image/First_Npc.png') ,
       animations: {idle: 1..4},
     )
-
+    @chatprogress = 0
     @chatList = ["Hello there, Welcome to middle earth (Press X to continue)", "My name is NPCone, I am your guider (Press X)",
-    "You can start moving by pressing W, A, S, D (Press X)","...(Press X to continue)"]
-
+    "You can start moving by pressing W, A, S, D (Press X)","Press i to access your inventory (X to continue)","(Press X to continue)"]
+    @newchat = ChatBubble.new(0, Window.height - Window.height / 5,
+    Window.width ,Window.height / 5, @chatList[@chatprogress])
+    @newchat.hide
     self.runAnimation
-
+    @talked = false
   end
 
 
@@ -33,20 +35,22 @@ class Warrior < NPC
    @image.play animation: :idle , loop: true
   end
 
-  def startDialogue
-    chatprogress = 1
-    newchat = ChatBubble.new(0, Window.height - Window.height / 5,
-    Window.width ,Window.height / 5, @chatList[0])
-    SharedData.shared_chat_array << newchat
-    Window.on :key_down do |event|
-      if event.key == 'x'
-        if chatprogress > @chatList.size - 1
-          newchat.hide
-          SharedData.clear_array
-        end
-        newchat.set_text(@chatList[chatprogress])
-        chatprogress += 1
+  def startDialogue(player)
+    if(player.talktoNpc != -1)
+      if @talked == false
+        @newchat.show
+        SharedData.shared_chat_array << @newchat
+          if @chatprogress > @chatList.size - 1
+            @talked = true
+            @newchat.hide
+            SharedData.clear_array
+            @chatprogress = 0
+          end
+          @newchat.set_text(@chatList[@chatprogress])
       end
+    else
+      @newchat.hide
+      @talked = false
     end
   end
 end

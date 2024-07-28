@@ -12,18 +12,19 @@ include CCHECK
 
 
 class Player < Sprite
-  attr_reader :x, :y, 
+  attr_reader :x, :y,
               :worldX, :worldY,
               :speed,
               :collision_with_monster_index
               :collision_with_npc_index
               :collision_with_item_index
 
-  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, 
-                :solidArea, 
-                :collisionOn, 
-                :myInventory, 
-                :interacting
+  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection,
+                :solidArea,
+                :collisionOn,
+                :myInventory,
+                :interacting,
+                :talktoNpc
 
 
   def initialize(worldX, worldY, width, height)
@@ -106,6 +107,7 @@ class Player < Sprite
 
     #8. State of interaction
     @interacting
+    @talktoNpc
 
     #9. Inventory
     @myInventory = Inventory.new()
@@ -197,7 +199,5 @@ class Player < Sprite
     @first_frame
     super
   end
-  
+
 end
-
-

@@ -41,7 +41,7 @@ npcs = [
 #------------------------- 1.5. Items Section --------------------------------
 insideChest = Meat.new
 items = [
-          Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 4, insideChest)
+          Chest.new(CP::TILE_SIZE * 6, CP::TILE_SIZE * 4, insideChest)
 
         ]
 
@@ -72,7 +72,7 @@ text1 = Text.new(
 
 #2. Include necessary tools
 #------------------------------------ 2.1. Get user's input -------------------------
-get_key_input(player, items)
+get_key_input(player, items, npcs)
 #------------------------------------ 2.2. Finding Path -----------------------------
 pFinder = PathFinder.new()
 #------------------------------------ 2.3. Audio/Sound ------------------------------
@@ -99,7 +99,7 @@ update do
 
     #4. Update NPCs
     for i in 0..(npcs.length - 1)
-      npcs[i].updateNPC(player, map)
+      npcs[i].updateNPC(player, map, i)
     end
 
     #5. Update Items in map
