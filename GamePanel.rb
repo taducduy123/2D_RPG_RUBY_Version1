@@ -6,6 +6,7 @@ require_relative 'GameMap'
 require_relative 'CommonParameter'
 require_relative 'Character_Class/Monster'
 require_relative 'Character_Class/Bat'
+require_relative 'Character_Class/Skeleton'
 require_relative 'FindingPath/Node'
 require_relative 'FindingPath/PathFinder'
 require_relative 'Character_Class/Warrior'
@@ -26,7 +27,8 @@ player = Player.new(1*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SI
 #------------------------- 1.3. Monsters Section --------------------------------
 monsters = [
             Bat.new(16*CP::TILE_SIZE, 0*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player),
-            Bat.new(16*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
+            Bat.new(16*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player),
+            Skeleton.new(4*CP::TILE_SIZE, 4*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
             # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
            ]
 
