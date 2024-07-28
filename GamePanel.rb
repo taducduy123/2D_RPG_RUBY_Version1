@@ -25,26 +25,26 @@ player = Player.new(1*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SI
 
 #------------------------- 1.3. Monsters Section --------------------------------
 monsters = [
-            Bat.new(8*CP::TILE_SIZE, 8*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
+            Bat.new(4*CP::TILE_SIZE, 4*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
             # Bat.new(1000, 1000, CP::TILE_SIZE, CP::TILE_SIZE, player),
             # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
            ]
 
 #------------------------- 1.4. NPCs Section --------------------------------
 npcs = [
-          Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3, CP::TILE_SIZE, CP::TILE_SIZE)
+          Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 4, CP::TILE_SIZE, CP::TILE_SIZE)
 
        ]
 
 #------------------------- 1.4. Items Section --------------------------------
 insideChest = Meat.new
 items = [
-          Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 5, insideChest)
+          Chest.new(CP::TILE_SIZE * 5, CP::TILE_SIZE * 4, insideChest)
 
         ]
 
 
-#------------------------- 1.4. Text Section --------------------------------
+#------------------------- 1.5. Text Section --------------------------------
 text = Text.new(
   '',
   x: 0, y: 0,

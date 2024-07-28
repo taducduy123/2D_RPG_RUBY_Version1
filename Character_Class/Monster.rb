@@ -71,26 +71,54 @@ class Monster < Sprite
 #-------------------------------- Very Usefull Methods -----------------------------------------
   #
   def DrawMonster(player)
-    #Where to draw monster on the screen (window)?
+    # Screen Coordinate of monster should be
     screenX = @worldX - player.worldX + player.x
     screenY = @worldY - player.worldY + player.y
-    
-    @image.x = screenX
-    @image.y = screenY
+
+    #World Coordinate of Camera
+    cameraWorldX = player.worldX - player.x
+    cameraWorldY = player.worldY - player.y
+
+    # Rendering game by removing unnessary images (we keep images in camera's scope, and remove otherwise)
+    if(CCHECK.intersect(cameraWorldX, cameraWorldY, CP::SCREEN_WIDTH, CP::SCREEN_HEIGHT,
+                        worldX, worldY, CP::TILE_SIZE, CP::TILE_SIZE) == true)  #Notice we want the dimension of camera is exactly same as our window
+      @image.x = screenX
+      @image.y = screenY
+      @image.add
+    else
+      @image.add
+    end
   end
 
   #
   def DrawHealthBar(player)
-    #Where to draw health bar in the screen (window)?
+    # Screen Coordinate of Health Bar should be
     screenX = @worldX - player.worldX + player.x 
     screenY = @worldY - player.worldY + player.y - (2/3 * CP::TILE_SIZE)
-   
-    @healthBar.heart.x = screenX - 15
-    @healthBar.heart.y = screenY
-    @healthBar.rec1.x =  screenX 
-    @healthBar.rec1.y =  screenY 
-    @healthBar.rec2.x =  @healthBar.rec1.x + 2
-    @healthBar.rec2.y =  @healthBar.rec1.y + 2
+
+    #World Coordinate of Camera
+    cameraWorldX = player.worldX - player.x
+    cameraWorldY = player.worldY - player.y
+    
+    # Rendering game by removing unnessary images (we keep images in camera's scope, and remove otherwise)
+    if(CCHECK.intersect(cameraWorldX, cameraWorldY, CP::SCREEN_WIDTH, CP::SCREEN_HEIGHT,
+                        worldX, worldY, CP::TILE_SIZE, CP::TILE_SIZE) == true)  #Notice we want the dimension of camera is exactly same as our window
+        @healthBar.heart.x = screenX - 15
+        @healthBar.heart.y = screenY
+        @healthBar.rec1.x =  screenX 
+        @healthBar.rec1.y =  screenY 
+        @healthBar.rec2.x =  @healthBar.rec1.x + 2
+        @healthBar.rec2.y =  @healthBar.rec1.y + 2
+
+        # If within the scope of camera, then add health bar to our screen
+        @healthBar.heart.add
+        @healthBar.rec1.add
+        @healthBar.rec2.add
+    else # remove otherwise
+        @healthBar.heart.remove
+        @healthBar.rec1.remove
+        @healthBar.rec2.remove
+    end
   end
 
   #

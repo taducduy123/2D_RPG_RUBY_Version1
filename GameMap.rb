@@ -3,6 +3,8 @@ require_relative 'Terrain_Class/Fire'
 require_relative 'Terrain_Class/Wall'
 require_relative 'Terrain_Class/Water'
 require_relative 'Terrain_Class/Grass'
+require_relative 'Terrain_Class/Tree'
+require_relative 'Terrain_Class/Ground'
 require_relative 'CollisionChecker'
 require_relative 'CommonParameter'
 require_relative 'ImageHandler'
@@ -13,7 +15,8 @@ include CCHECK
 #Grass: 1
 #Water: 2
 #Fire: 3
-
+#Tree: 4
+#Ground: 5
 class GameMap
     #
     attr_reader :tileManager, :tileSet, :tile
@@ -22,7 +25,9 @@ class GameMap
                  Wall.new(0, 0, CP::TILE_SIZE, CP::TILE_SIZE),
                  Grass.new(0, 0, CP::TILE_SIZE, CP::TILE_SIZE),
                  Water.new(0, 0, CP::TILE_SIZE, CP::TILE_SIZE),
-                 Fire.new(0, 0, CP::TILE_SIZE, CP::TILE_SIZE)
+                 Fire.new(0, 0, CP::TILE_SIZE, CP::TILE_SIZE),
+                 Tree.new(0, 0, CP::TILE_SIZE, CP::TILE_SIZE),
+                 Ground.new(0, 0, CP::TILE_SIZE, CP::TILE_SIZE),
                 ]
         for i in 0..(@tile.length)-1
             @tile[i].image.remove
@@ -59,16 +64,22 @@ class GameMap
                 case @tileManager[i][j]
                     when  0
                         @tileSet[i][j] = Wall.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
-                        #@tileSet[i][j].image.remove
+                        @tileSet[i][j].image.remove
                     when  1
                         @tileSet[i][j] = Grass.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
-                        #@tileSet[i][j].image.remove
+                        @tileSet[i][j].image.remove
                     when  2
                         @tileSet[i][j] = Water.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
-                        #@tileSet[i][j].image.remove
+                        @tileSet[i][j].image.remove
                     when  3
                         @tileSet[i][j] = Fire.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
-                        #@tileSet[i][j].image.remove
+                        @tileSet[i][j].image.remove
+                    when  4
+                        @tileSet[i][j] = Tree.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
+                        @tileSet[i][j].image.remove
+                    when  5
+                        @tileSet[i][j] = Ground.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
+                        @tileSet[i][j].image.remove
                 end
             end
         end
