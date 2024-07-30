@@ -10,6 +10,7 @@ class Bat < Monster
   def initialize(wordlX, worldY, width, height, player)
     super(wordlX, worldY, width, height)
     
+    #1. Image and Animation
     @image = Sprite.new(
       'Image/Bat.png',
       x: @worldX - player.worldX + player.x,
@@ -22,11 +23,14 @@ class Bat < Monster
     )
     @image.play
 
-    # Health Bar
+    #2. Health Bar
     @healthBar = HealthBar.new(100, 100, -999, -999, 48)
 
-    # Speed
+    #3. Speed
     @speed = 1
+
+    #4. This will be convenient for random move function
+    @moveCounter = 0
   end
 
 
@@ -42,6 +46,52 @@ class Bat < Monster
       self.removeMonster
     end
   end
+
+
+
+
+
+#------------------------------ Random Move ---------------------------------------------------
+def randMove(player, map, items, npcs, monsters)
+
+  @moveCounter = @moveCounter + 1
+  # generate a random number after every 120 steps
+  if(@moveCounter == 120)
+    @upDirection = false
+    @downDirection = false
+    @leftDirection = false
+    @rightDirection = false
+
+    ranNum = rand(1..100)
+    if(1 <= ranNum && ranNum <= 25)
+      @upDirection = true
+    elsif(25 < ranNum && ranNum <= 50)
+      @downDirection = true
+    elsif(50 < ranNum && ranNum <= 75)
+      @leftDirection = true
+    else
+      @rightDirection = true
+    end
+  @moveCounter = 0 #reset moveCounter
+  end
+
+
+  # Checking collision before moving
+  self.checkCollision(player, map, items, npcs, monsters)
+
+  # If no collison is detected, then move monster
+  if(@collisionOn == false)
+    if(self.upDirection == true)
+      @worldY -= @speed
+    elsif(self.downDirection == true)
+      @worldY += @speed
+    elsif(self.leftDirection == true)
+      @worldX -= @speed
+    elsif(self.rightDirection == true)
+      @worldX += @speed
+    end
+  end
+end
 
 end
 

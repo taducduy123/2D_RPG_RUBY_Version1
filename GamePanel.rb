@@ -28,7 +28,7 @@ player = Player.new(1*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SI
 monsters = [
             Bat.new(16*CP::TILE_SIZE, 0*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player),
             Bat.new(16*CP::TILE_SIZE, 1*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player),
-            Skeleton.new(4*CP::TILE_SIZE, 4*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
+            Skeleton.new(26*CP::TILE_SIZE, 5*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE, player)
             # Bat.new(1500, 1500, CP::TILE_SIZE, CP::TILE_SIZE, player)
            ]
 
@@ -92,8 +92,8 @@ update do
     end
 
     #3. Update Texts
-    text.text = "Coordinate: #{player.worldX}  #{player.worldY} "
-    text1.text = "Coordinate Monster: #{monsters[0].worldX}    #{monsters[0].worldY}"
+    text.text = "Coordinate: #{player.worldX}   #{player.worldY} "
+    text1.text = "Coordinate Skeleton: #{monsters[2].worldX}    #{monsters[2].worldY}"
 
     #4. Update NPCs
     for i in 0..(npcs.length - 1)
