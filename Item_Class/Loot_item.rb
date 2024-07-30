@@ -1,4 +1,7 @@
 require 'ruby2d'
+
+#NOTES: ALL ITEMS are CONSUMABLES
+
 class Meat
   attr_accessor  :image_path, :visible
   def initialize()
@@ -6,21 +9,21 @@ class Meat
   end
 
   def effect
-    healthRegain = -20
+    healthRegain = 20
+    return healthRegain
   end
 
 
-end
-class Health_talisman
-  attr_accessor :image_path, :visible
-  def initialize()
-    @image_path = 'Image/crimson_talisman.png'
-  end
 end
 
 class Rotted
   attr_accessor :image_path, :visible
   def initialize()
-    @image_path = 'Image/crimson_talisman.png'
+    @image_path = 'Image/Meat.png'
+  end
+
+  def effect
+    healthRegain = -60
+    return healthRegain
   end
 end

@@ -202,6 +202,11 @@ class Player < Sprite
 
   def useItem()
     puts "Access my_inventory at #{myInventory.cursor_y} #{myInventory.cursor_x}"
+    if myInventory.my_inventory[myInventory.cursor_y][myInventory.cursor_x]
+      @healthBar.hp = @healthBar.hp + myInventory.my_inventory[myInventory.cursor_y][myInventory.cursor_x].effect
+      myInventory.removeItem(myInventory.cursor_y, myInventory.cursor_x)
+      @healthBar.update
+    end
   end
 
 

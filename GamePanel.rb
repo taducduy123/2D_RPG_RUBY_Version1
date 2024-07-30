@@ -39,7 +39,7 @@ npcs = [
        ]
 
 #------------------------- 1.5. Items Section --------------------------------
-insideChest = Meat.new
+insideChest = Rotted.new
 items = [
           Chest.new(CP::TILE_SIZE * 6, CP::TILE_SIZE * 4, insideChest)
 
@@ -114,8 +114,8 @@ end
 
 #------------------------------------------------------- Set up window ---------------------------------------
 #Setting Window
-set width: CP::SCREEN_WIDTH
-set height: CP::SCREEN_HEIGHT
+set width: CP::SCREEN_WIDTH - 200
+set height: CP::SCREEN_HEIGHT - 200
 set title: "Simulating Hero's Adventure (RPG GAME) with Ruby "
 set resizable: true
 set background: 'black'

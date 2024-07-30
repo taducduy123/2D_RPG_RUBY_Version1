@@ -70,7 +70,7 @@ def get_key_input(player, interact_obj, interact_npc)
 
     when 'f'
      if player.myInventory.visible
-      player.myInventory.itemManage
+      player.useItem()
      end
 
     when 'left'

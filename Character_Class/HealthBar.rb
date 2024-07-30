@@ -4,7 +4,7 @@ class HealthBar
 
   attr_reader :hp
   attr_writer :hp
-  attr_accessor :heart, :rec1, :rec2
+  attr_accessor :heart, :rec1, :rec2, :leng
 
   def initialize(hp, maxHp, x, y, leng)
     @hp = hp
@@ -16,7 +16,7 @@ class HealthBar
       width: 15, height: 10,
       z: 2
     )
-
+    @leng = leng
     #the maxHp bar
     @rec1 = Rectangle.new(
       x: x, y: y,
@@ -36,7 +36,7 @@ class HealthBar
   def move(xspeed,yspeed)
     @rec1.x += xspeed
     @rec1.y += yspeed
-    
+
     @rec2.x += xspeed
     @rec2.y += yspeed
 
