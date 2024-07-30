@@ -71,7 +71,7 @@ class Chest
         player.interacting = chestId
       else
         @activemess.hide
-        @activemess.set_text("Press e to open")
+        @activemess.set_text("Press E to open")
         player.interacting = -1
       end
 

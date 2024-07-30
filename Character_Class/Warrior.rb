@@ -21,7 +21,7 @@ class Warrior < NPC
     )
     @chatprogress = 0
     @chatList = ["Hello there, Welcome to middle earth (Press X to continue)", "My name is NPCone, I am your guider (Press X)",
-    "You can start moving by pressing W, A, S, D (Press X)","Press i to access your inventory (X to continue)","(Press X to continue)"]
+    "You can start moving by pressing W, A, S, D (Press X)","Press I to access your inventory (X to continue)","(Press X to continue)"]
     @newchat = ChatBubble.new(0, Window.height - Window.height / 11,
     Window.width ,Window.height / 5, @chatList[@chatprogress])
     @newchat.hide
