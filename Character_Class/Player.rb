@@ -200,4 +200,10 @@ class Player < Sprite
     super
   end
 
+  def useItem()
+    puts "Access my_inventory at #{myInventory.cursor_y} #{myInventory.cursor_x}"
+  end
+
+
+
 end

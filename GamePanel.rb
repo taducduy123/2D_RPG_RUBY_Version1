@@ -34,7 +34,7 @@ monsters = [
 
 #------------------------- 1.4. NPCs Section --------------------------------
 npcs = [
-          Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 4, CP::TILE_SIZE, CP::TILE_SIZE)
+          Warrior.new(CP::TILE_SIZE * 3, CP::TILE_SIZE * 3, CP::TILE_SIZE, CP::TILE_SIZE)
 
        ]
 

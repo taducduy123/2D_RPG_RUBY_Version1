@@ -57,28 +57,23 @@ class Inventory
   def move_cursor(dx, dy)
     @cursor_x = (@cursor_x + dx) % InventorySize
     @cursor_y = (@cursor_y + dy) % InventorySize
-    itemManage(@cursor_y, @cursor_x)
     @cursor.x = @cursor_x * TILE_SIZE + Window.width / 3
     @cursor.y = @cursor_y * TILE_SIZE + Window.height / 4
   end
 
   def add_to_inventory(loot) # Methods to add items properly
     if @held_items_row < @my_inventory.size
-      @my_inventory[@held_items_row][@held_items_col] = loot[0] # WORKS only 1 item in chest
+      @my_inventory[@held_items_row][@held_items_col] = loot[0] # WORKS only with 1 item per chest
       @held_items_col += 1
       if @held_items_col != 0 && @held_items_col % InventorySize == 0
         @held_items_col = 0
         @held_items_row += 1
       end
-    else
-      @IsFull = true
-      print @IsFull
     end
 
   end
 
   def display
-    itemManage(0, 0)
     draw_grid
     draw_cursor
   end
@@ -89,8 +84,9 @@ class Inventory
     @cursor.remove
   end
 
-  def itemManage(x, y)
-      puts "Access my_inventory at #{x} #{y}"
-  end
+  # def itemManage(x, y)
+  #     puts "Access my_inventory at #{x} #{y}"
+
+  # end
 
 end

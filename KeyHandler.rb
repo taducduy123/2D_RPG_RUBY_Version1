@@ -67,6 +67,12 @@ def get_key_input(player, interact_obj, interact_npc)
         player.myInventory.visible = true
         player.myInventory.display
       end
+
+    when 'f'
+     if player.myInventory.visible
+      player.myInventory.itemManage
+     end
+
     when 'left'
       player.myInventory.move_cursor(-1, 0) if player.myInventory.visible
     when 'right'
