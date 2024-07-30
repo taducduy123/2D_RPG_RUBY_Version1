@@ -143,6 +143,7 @@ class Monster < Sprite
   #7.
   def checkCollision(player, map, items, npcs, monsters)
     @collisionOn = false
+    @collisionPlayerOn = false
 
     #1. Check if monster collides any wall
     CCHECK.checkTile(self, map)
