@@ -114,8 +114,8 @@ end
 
 #------------------------------------------------------- Set up window ---------------------------------------
 #Setting Window
-set width: CP::SCREEN_WIDTH - 200
-set height: CP::SCREEN_HEIGHT - 200
+set width: CP::SCREEN_WIDTH 
+set height: CP::SCREEN_HEIGHT 
 set title: "Simulating Hero's Adventure (RPG GAME) with Ruby "
 set resizable: true
 set background: 'black'
