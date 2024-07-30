@@ -75,11 +75,11 @@ class Skeleton < Monster
     #@showPathOn = 
   end
   def runAnimation
-    @image.play animation: :walk, loop: true
+    @image.play animation: :walk
   end
 
   def runAnimationLeft
-    @image.play animation: :walk, loop: true, flip: :horizontal
+    @image.play animation: :walk, flip: :horizontal
   end
 
 #-------------------------------- Override Methods -----------------------------------------
